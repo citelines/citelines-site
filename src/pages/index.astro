@@ -1,18 +1,23 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Citelines</title>
-	</head>
-	<body>
-		<h1>Citelines</h1>
-		<p>Coming soon...</p>
-	</body>
-</html>
+<Layout title="Home" description="Citelines — placeholder homepage">
+  <h1>Citelines</h1>
+  <p style="margin-top: 1rem; color: #555;">Placeholder homepage. Content coming soon.</p>
+
+  <section style="margin-top: 3rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+    <a href="/about" style="display:block; border: 1px solid #e5e5e5; border-radius: 6px; padding: 1.25rem; text-decoration: none; color: inherit;">
+      <h2 style="font-size: 1rem;">About</h2>
+      <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">Learn about Citelines.</p>
+    </a>
+    <a href="/features" style="display:block; border: 1px solid #e5e5e5; border-radius: 6px; padding: 1.25rem; text-decoration: none; color: inherit;">
+      <h2 style="font-size: 1rem;">Features</h2>
+      <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">See what Citelines offers.</p>
+    </a>
+    <a href="/contact" style="display:block; border: 1px solid #e5e5e5; border-radius: 6px; padding: 1.25rem; text-decoration: none; color: inherit;">
+      <h2 style="font-size: 1rem;">Contact</h2>
+      <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">Get in touch with us.</p>
+    </a>
+  </section>
+</Layout>
