@@ -50,6 +50,16 @@
 
 ---
 
+## Open Questions / Future Work
+
+These have dedicated notes in `dev-docs/` (gitignored):
+
+- **Extension auto-update strategy** (`dev-docs/auto-update.md`) — how to push updates to test users now (unpacked), and how CWS auto-update works once published. Includes a lightweight polling approach for test users.
+- **Testing strategy** (`dev-docs/testing.md`) — when to add tests, what to test first (citation parsing, auth rules, save/retrieve cycle, E2E), and recommended stack (Vitest + Playwright).
+- **content.js refactor** (`dev-docs/content-js-refactor.md`) — content.js is 1,600 lines and handles everything. Doc covers how to split it into ~7 modules, the shared state problem, and whether to add a bundler (esbuild). Also notes two quick wins: fix an undeclared `viewOnlyAnnotations` variable and clean up scattered `[DEBUG]` console logs.
+
+---
+
 ## Backlog / Ideas
 - Personal inbox: Zoho Mail (free) or Google Workspace ($6/mo)
 - Consider open-sourcing youtube-annotator after legal review

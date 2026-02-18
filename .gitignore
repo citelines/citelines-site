@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local development notes and decision docs (not for repo)
+dev-docs/
