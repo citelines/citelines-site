@@ -332,7 +332,9 @@ const { title, description = 'Citelines' } = Astro.props;
       &copy; {new Date().getFullYear()} Citelines
     </footer>
     <script>
-      const API = '/api';
+      const API = window.location.hostname === 'localhost'
+        ? '/api'
+        : 'https://youtube-annotator-production.up.railway.app/api';
       const toggle = document.getElementById('account-toggle');
       const dropdown = document.getElementById('auth-dropdown');
       const tabs = dropdown.querySelectorAll('.auth-tab[data-tab]');

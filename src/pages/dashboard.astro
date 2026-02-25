@@ -239,7 +239,9 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
-  const API = '/api';
+  const API = window.location.hostname === 'localhost'
+    ? '/api'
+    : 'https://youtube-annotator-production.up.railway.app/api';
   const LIMIT = 50;
 
   const elUnauthed = document.getElementById('dash-unauthed');
