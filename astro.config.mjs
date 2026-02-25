@@ -10,5 +10,15 @@ export default defineConfig({
       // Make custom components available globally in MDX
       extendMarkdownConfig: true,
     })
-  ]
+  ],
+  vite: {
+    server: {
+      proxy: {
+        '/api': {
+          target: 'https://youtube-annotator-production.up.railway.app',
+          changeOrigin: true,
+        }
+      }
+    }
+  }
 });

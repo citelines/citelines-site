@@ -2,22 +2,91 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Home" description="Citelines — placeholder homepage">
-  <h1>Citelines</h1>
-  <p style="margin-top: 1rem; color: #555;">Placeholder homepage. Content coming soon.</p>
+<Layout title="Home" description="Citelines — verified citations for online video">
+  <div class="hero">
+    <p class="tagline">Placeholder: one-line description of what Citelines is.</p>
 
-  <section style="margin-top: 3rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-    <a href="/about" style="display:block; border: 1px solid #e5e5e5; border-radius: 6px; padding: 1.25rem; text-decoration: none; color: inherit;">
-      <h2 style="font-size: 1rem;">About</h2>
-      <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">Learn about Citelines.</p>
-    </a>
-    <a href="/features" style="display:block; border: 1px solid #e5e5e5; border-radius: 6px; padding: 1.25rem; text-decoration: none; color: inherit;">
-      <h2 style="font-size: 1rem;">Features</h2>
-      <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">See what Citelines offers.</p>
-    </a>
-    <a href="/contact" style="display:block; border: 1px solid #e5e5e5; border-radius: 6px; padding: 1.25rem; text-decoration: none; color: inherit;">
-      <h2 style="font-size: 1rem;">Contact</h2>
-      <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">Get in touch with us.</p>
-    </a>
-  </section>
+    <a href="#" class="btn-cta">Get the Plugin</a>
+
+    <div class="secondary">
+      <a href="#" class="btn-secondary">Donate</a>
+
+      <form class="subscribe-form" onsubmit="event.preventDefault()">
+        <input type="email" placeholder="you@example.com" required />
+        <button type="submit" class="btn-secondary">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
+  <style is:global>
+    .hero {
+      text-align: center;
+      padding: 6rem 0;
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+      color: #555;
+    }
+
+    .btn-cta {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 0.9rem 2.5rem;
+      background: #1a1a1a;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .btn-cta:hover {
+      background: #333;
+    }
+
+    .secondary {
+      margin-top: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 0.55rem 1.25rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fff;
+      color: #555;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      border-color: #999;
+      color: #1a1a1a;
+    }
+
+    .subscribe-form {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .subscribe-form input {
+      padding: 0.55rem 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      width: 200px;
+    }
+
+    .subscribe-form input:focus {
+      outline: none;
+      border-color: #999;
+    }
+  </style>
 </Layout>

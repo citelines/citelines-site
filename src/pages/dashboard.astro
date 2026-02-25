@@ -1,0 +1,452 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Dashboard">
+  <div id="dashboard">
+    <!-- Unauthenticated -->
+    <div id="dash-unauthed" class="dash-state" style="display:none">
+      <div class="dash-empty">
+        <h2>Please log in</h2>
+        <p>Log in or sign up using the account icon in the navigation bar to view your dashboard.</p>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div id="dash-error" class="dash-state" style="display:none">
+      <div class="dash-empty">
+        <h2>Something went wrong</h2>
+        <p id="dash-error-msg">Failed to load your shares. Please try refreshing the page.</p>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div id="dash-loading" class="dash-state" style="display:none">
+      <div class="dash-spinner-wrap">
+        <div class="dash-spinner"></div>
+        <p>Loading your shares…</p>
+      </div>
+    </div>
+
+    <!-- Authenticated -->
+    <div id="dash-authed" class="dash-state" style="display:none">
+      <h1>Dashboard</h1>
+
+      <!-- Stats bar -->
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-citations">0</div>
+          <div class="stat-label">Citations</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-videos">0</div>
+          <div class="stat-label">Videos</div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table id="shares-table">
+          <thead>
+            <tr>
+              <th data-sort="text">Citation <span class="sort-arrow"></span></th>
+              <th data-sort="timestamp">Timestamp <span class="sort-arrow"></span></th>
+              <th data-sort="title">Video Title <span class="sort-arrow"></span></th>
+              <th data-sort="videoId">Video ID <span class="sort-arrow"></span></th>
+              <th data-sort="createdAt">Created <span class="sort-arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="shares-tbody"></tbody>
+        </table>
+        <div id="no-shares" style="display:none" class="dash-empty">
+          <p>You don't have any citations yet.</p>
+        </div>
+      </div>
+
+      <div id="load-more-wrap" style="display:none">
+        <button id="load-more-btn" class="load-more-btn">Load more</button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  #dashboard {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .dash-state { }
+
+  .dash-empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: #555;
+  }
+
+  .dash-empty h2 {
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+  }
+
+  .dash-spinner-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 1rem;
+    color: #555;
+  }
+
+  .dash-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e5e5e5;
+    border-top-color: #1a1a1a;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-bottom: 1rem;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stats-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    flex: 1;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 0.25rem;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #e5e5e5;
+    white-space: nowrap;
+  }
+
+  th {
+    cursor: pointer;
+    user-select: none;
+    color: #555;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  th:hover {
+    color: #1a1a1a;
+  }
+
+  .sort-arrow {
+    font-size: 0.7rem;
+    margin-left: 2px;
+  }
+
+  th.sort-asc .sort-arrow::after { content: ' ▲'; }
+  th.sort-desc .sort-arrow::after { content: ' ▼'; }
+
+  td a {
+    color: #1a1a1a;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  td a:hover {
+    text-decoration: underline;
+  }
+
+  .citation-text {
+    white-space: normal;
+    max-width: 320px;
+  }
+
+  .visibility-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .badge-public {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .badge-private {
+    background: #f3f3f3;
+    color: #888;
+  }
+
+  .load-more-btn {
+    display: block;
+    margin: 1.5rem auto;
+    padding: 0.5rem 2rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #555;
+  }
+
+  .load-more-btn:hover {
+    border-color: #999;
+    color: #1a1a1a;
+  }
+
+  .load-more-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+</style>
+
+<script>
+  const API = '/api';
+  const LIMIT = 50;
+
+  const elUnauthed = document.getElementById('dash-unauthed');
+  const elError = document.getElementById('dash-error');
+  const elErrorMsg = document.getElementById('dash-error-msg');
+  const elLoading = document.getElementById('dash-loading');
+  const elAuthed = document.getElementById('dash-authed');
+  const tbody = document.getElementById('shares-tbody');
+  const noShares = document.getElementById('no-shares');
+  const loadMoreWrap = document.getElementById('load-more-wrap');
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  const statCitations = document.getElementById('stat-citations');
+  const statVideos = document.getElementById('stat-videos');
+
+  let allShares = [];
+  let allCitations = [];
+  let offset = 0;
+  let hasMore = false;
+  let sortKey = 'createdAt';
+  let sortDir = 'desc';
+
+  function show(el) { el.style.display = ''; }
+  function hide(el) { el.style.display = 'none'; }
+
+  function getToken() {
+    return localStorage.getItem('citelines_token');
+  }
+
+  async function fetchShares(loadMore = false) {
+    if (!loadMore) {
+      offset = 0;
+      allShares = [];
+    }
+    const token = getToken();
+    const res = await fetch(`${API}/shares/me?limit=${LIMIT}&offset=${offset}`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    if (!res.ok) {
+      if (res.status === 401) {
+        localStorage.removeItem('citelines_token');
+        localStorage.removeItem('citelines_user');
+        showState('unauthed');
+        return;
+      }
+      const errText = await res.text().catch(() => '');
+      throw new Error(`${res.status} ${res.statusText}: ${errText}`);
+    }
+    const data = await res.json();
+    const shares = Array.isArray(data) ? data : (data.shares || []);
+    allShares = allShares.concat(shares);
+    offset += shares.length;
+    hasMore = shares.length === LIMIT;
+    flattenCitations();
+    return shares;
+  }
+
+  function flattenCitations() {
+    allCitations = [];
+    for (const s of allShares) {
+      const annotations = s.annotations || [];
+      for (const a of annotations) {
+        allCitations.push({
+          text: a.text,
+          timestamp: a.timestamp,
+          title: s.title,
+          videoId: s.videoId,
+          shareToken: s.shareToken,
+          createdAt: s.createdAt,
+        });
+      }
+    }
+  }
+
+  function showState(state) {
+    hide(elUnauthed);
+    hide(elError);
+    hide(elLoading);
+    hide(elAuthed);
+    if (state === 'unauthed') show(elUnauthed);
+    else if (state === 'error') show(elError);
+    else if (state === 'loading') show(elLoading);
+    else if (state === 'authed') show(elAuthed);
+  }
+
+  function updateStats() {
+    statCitations.textContent = allCitations.length;
+    const uniqueVideos = new Set(allCitations.map(c => c.videoId));
+    statVideos.textContent = uniqueVideos.size;
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function formatTimestamp(seconds) {
+    if (seconds == null) return '—';
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    return `${m}:${String(s).padStart(2, '0')}`;
+  }
+
+  function sortCitations() {
+    allCitations.sort((a, b) => {
+      let aVal = a[sortKey];
+      let bVal = b[sortKey];
+      if (sortKey === 'text' || sortKey === 'title') {
+        aVal = (aVal || '').toLowerCase();
+        bVal = (bVal || '').toLowerCase();
+      }
+      if (sortKey === 'createdAt') {
+        aVal = new Date(aVal || 0).getTime();
+        bVal = new Date(bVal || 0).getTime();
+      }
+      if (aVal < bVal) return sortDir === 'asc' ? -1 : 1;
+      if (aVal > bVal) return sortDir === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }
+
+  function renderTable() {
+    sortCitations();
+    tbody.innerHTML = '';
+    if (allCitations.length === 0) {
+      show(noShares);
+      return;
+    }
+    hide(noShares);
+    for (const c of allCitations) {
+      const tr = document.createElement('tr');
+      const title = c.title || 'Untitled';
+      const videoUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(c.videoId)}&t=${Math.floor(c.timestamp)}s`;
+      tr.innerHTML = `
+        <td class="citation-text">${escHtml(c.text || '—')}</td>
+        <td>${formatTimestamp(c.timestamp)}</td>
+        <td><a href="${videoUrl}" target="_blank" rel="noopener">${escHtml(title)}</a></td>
+        <td>${escHtml(c.videoId || '—')}</td>
+        <td>${formatDate(c.createdAt)}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+    if (hasMore) show(loadMoreWrap);
+    else hide(loadMoreWrap);
+  }
+
+  function escHtml(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  // Column sort
+  document.querySelectorAll('#shares-table th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      if (sortKey === key) {
+        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortKey = key;
+        sortDir = 'asc';
+      }
+      document.querySelectorAll('#shares-table th').forEach(h => {
+        h.classList.remove('sort-asc', 'sort-desc');
+      });
+      th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+      renderTable();
+    });
+  });
+
+  // Load more
+  loadMoreBtn.addEventListener('click', async () => {
+    loadMoreBtn.disabled = true;
+    loadMoreBtn.textContent = 'Loading…';
+    try {
+      await fetchShares(true);
+      updateStats();
+      renderTable();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      loadMoreBtn.disabled = false;
+      loadMoreBtn.textContent = 'Load more';
+    }
+  });
+
+  // Init
+  async function init() {
+    const token = getToken();
+    if (!token) {
+      showState('unauthed');
+      return;
+    }
+    showState('loading');
+    try {
+      await fetchShares();
+      updateStats();
+      showState('authed');
+      renderTable();
+    } catch (e) {
+      console.error('Dashboard error:', e);
+      elErrorMsg.textContent = `Failed to load shares: ${e.message}`;
+      showState('error');
+    }
+  }
+
+  init();
+</script>
