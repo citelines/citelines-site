@@ -51,7 +51,24 @@
 - [ ] User account self-delete flow (from account settings)
 
 ## Phase 5 — Core Features
-- [ ] (Add features here)
+- 🚧 Support information hierarchy (creator vs viewer citations)
+- [ ] Editability of "mine" citations pre-submission for review
+- [ ] Creator Mode (better citation entry for creators who know what they want to cite)
+- [ ] "Save citation" / "save video" flow for viewers
+- [ ] Show videos and citations list in extension sidebar (currently just counts)
+- [ ] Website dashboard: "my citations" vs "saved citations"
+- [ ] Validate annotations to a timeblock (minimum granularity)
+- [ ] Zotero / Wikipedia citation integration (explore feasibility)
+
+## Phase 6 — Moderation, Policy & Trust
+- 🚧 Defenses against bad actors: logged-out (IP / fingerprint banning)
+- [ ] Draft Privacy Policy
+- [ ] Chrome Web Store submission
+
+## Phase 7 — Operations
+- [x] Measurement: extension activity metrics on admin dashboard
+- [ ] Pay for server hosting (Railway trial expiration)
+- [ ] Brand assets: icons, logos, site design
 
 ---
 
