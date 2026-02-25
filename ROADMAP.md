@@ -67,6 +67,11 @@
 - 🚧 Defenses against bad actors: logged-out (IP / fingerprint banning)
 - [ ] Draft Privacy Policy
 - [ ] Chrome Web Store submission
+- [ ] Documentation / Acknowledgements page — explain the moderation stack and credit providers:
+  - [`obscenity`](https://github.com/jo3-l/obscenity) — display name profanity filtering (implemented)
+  - [Google Safe Browsing API](https://developers.google.com/safe-browsing) — malicious URL detection (planned)
+  - [Perspective API](https://perspectiveapi.com/) — citation text toxicity scoring (planned)
+  - [IFTAS](https://about.iftas.org/trust-safety-services/) — supplemental spam/abuse lists (planned)
 
 ## Phase 7 — Operations
 - [x] Measurement: extension activity metrics on admin dashboard

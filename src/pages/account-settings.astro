@@ -1,0 +1,339 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Account Settings">
+  <div id="settings">
+    <!-- Unauthenticated -->
+    <div id="settings-unauthed" class="settings-state" style="display:none">
+      <div class="settings-empty">
+        <h2>Please log in</h2>
+        <p>Log in or sign up using the account icon in the navigation bar to access account settings.</p>
+      </div>
+    </div>
+
+    <!-- Authenticated -->
+    <div id="settings-authed" class="settings-state" style="display:none">
+      <h1>Account Settings</h1>
+
+      <div class="settings-user-info">
+        <div class="settings-label">Display Name</div>
+        <div class="settings-value" id="settings-name">—</div>
+        <div class="settings-label">Email</div>
+        <div class="settings-value" id="settings-email">—</div>
+        <div class="settings-label">Account Type</div>
+        <div class="settings-value" id="settings-auth-type">—</div>
+      </div>
+
+      <!-- Danger Zone -->
+      <div class="danger-zone">
+        <h2>Delete Account</h2>
+        <p class="danger-warning">
+          This will permanently delete your account. Your citations will remain visible but will no longer be linked to your profile.
+          This action cannot be undone.
+        </p>
+
+        <div id="delete-error" class="delete-msg delete-msg-error" style="display:none"></div>
+
+        <!-- Password confirmation (email/password users) -->
+        <div id="delete-password-section">
+          <div class="delete-field">
+            <label for="delete-password">Confirm your password</label>
+            <input id="delete-password" type="password" placeholder="Enter your password" autocomplete="current-password" />
+          </div>
+        </div>
+
+        <!-- Type-to-confirm (YouTube-only users) -->
+        <div id="delete-confirm-section" style="display:none">
+          <div class="delete-field">
+            <label for="delete-confirm-input">Type <strong>DELETE</strong> to confirm</label>
+            <input id="delete-confirm-input" type="text" placeholder="DELETE" autocomplete="off" />
+          </div>
+        </div>
+
+        <button id="delete-btn" class="delete-btn" disabled>Delete My Account</button>
+      </div>
+    </div>
+
+    <!-- Deleted confirmation -->
+    <div id="settings-deleted" class="settings-state" style="display:none">
+      <div class="settings-empty">
+        <h2>Account Deleted</h2>
+        <p>Your account has been successfully deleted. Redirecting to home page...</p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  #settings {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .settings-state { }
+
+  .settings-empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: #555;
+  }
+
+  .settings-empty h2 {
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .settings-user-info {
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 3rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 1.5rem;
+    align-items: baseline;
+  }
+
+  .settings-label {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+  }
+
+  .settings-value {
+    font-size: 0.95rem;
+    color: #1a1a1a;
+  }
+
+  .danger-zone {
+    border: 1px solid #e5c5c5;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background: #fdf5f5;
+  }
+
+  .danger-zone h2 {
+    font-size: 1.1rem;
+    color: #c00;
+    margin-bottom: 0.75rem;
+  }
+
+  .danger-warning {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+
+  .delete-field {
+    margin-bottom: 1rem;
+  }
+
+  .delete-field label {
+    display: block;
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 0.35rem;
+  }
+
+  .delete-field input {
+    width: 100%;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+  }
+
+  .delete-field input:focus {
+    border-color: #c00;
+  }
+
+  .delete-btn {
+    width: 100%;
+    padding: 0.6rem;
+    background: #c00;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .delete-btn:hover:not(:disabled) {
+    background: #a00;
+  }
+
+  .delete-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .delete-msg {
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .delete-msg-error {
+    background: #fce4ec;
+    color: #c00;
+    border: 1px solid #f5c6cb;
+  }
+</style>
+
+<script>
+  const API = window.location.hostname === 'localhost'
+    ? '/api'
+    : 'https://youtube-annotator-production.up.railway.app/api';
+
+  const elUnauthed = document.getElementById('settings-unauthed');
+  const elAuthed = document.getElementById('settings-authed');
+  const elDeleted = document.getElementById('settings-deleted');
+  const elName = document.getElementById('settings-name');
+  const elEmail = document.getElementById('settings-email');
+  const elAuthType = document.getElementById('settings-auth-type');
+  const deleteError = document.getElementById('delete-error');
+  const deleteBtn = document.getElementById('delete-btn');
+  const passwordSection = document.getElementById('delete-password-section');
+  const confirmSection = document.getElementById('delete-confirm-section');
+  const passwordInput = document.getElementById('delete-password');
+  const confirmInput = document.getElementById('delete-confirm-input');
+
+  let currentUser = null;
+  let isYouTubeOnly = false;
+
+  function show(el) { el.style.display = ''; }
+  function hide(el) { el.style.display = 'none'; }
+
+  function showError(msg) {
+    deleteError.textContent = msg;
+    show(deleteError);
+  }
+
+  function hideError() {
+    deleteError.textContent = '';
+    hide(deleteError);
+  }
+
+  function getToken() {
+    return localStorage.getItem('citelines_token');
+  }
+
+  function formatAuthType(user) {
+    if (user.youtubeChannelId && user.email) return 'Email & YouTube';
+    if (user.youtubeChannelId) return 'YouTube';
+    if (user.authType === 'password') return 'Email & Password';
+    return user.authType || '—';
+  }
+
+  // Enable/disable delete button based on input
+  function updateDeleteButton() {
+    if (isYouTubeOnly) {
+      deleteBtn.disabled = confirmInput.value.trim() !== 'DELETE';
+    } else {
+      deleteBtn.disabled = passwordInput.value.length === 0;
+    }
+  }
+
+  passwordInput.addEventListener('input', updateDeleteButton);
+  confirmInput.addEventListener('input', updateDeleteButton);
+
+  deleteBtn.addEventListener('click', async () => {
+    hideError();
+
+    // Extra confirmation
+    const confirmed = confirm('Are you sure you want to delete your account? This cannot be undone.');
+    if (!confirmed) return;
+
+    deleteBtn.disabled = true;
+    deleteBtn.textContent = 'Deleting…';
+
+    try {
+      const token = getToken();
+      const body = {};
+
+      if (!isYouTubeOnly) {
+        body.password = passwordInput.value;
+      } else {
+        body.confirm = true;
+      }
+
+      const res = await fetch(`${API}/auth/account`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || data.error || 'Deletion failed');
+      }
+
+      // Success — clear auth and show confirmation
+      localStorage.removeItem('citelines_token');
+      localStorage.removeItem('citelines_user');
+
+      hide(elAuthed);
+      show(elDeleted);
+
+      // Redirect to home after a brief delay
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 3000);
+
+    } catch (err) {
+      showError(err.message);
+      deleteBtn.disabled = false;
+      deleteBtn.textContent = 'Delete My Account';
+    }
+  });
+
+  // Init
+  function init() {
+    const token = getToken();
+    const userStr = localStorage.getItem('citelines_user');
+
+    if (!token || !userStr) {
+      show(elUnauthed);
+      return;
+    }
+
+    try {
+      currentUser = JSON.parse(userStr);
+    } catch {
+      show(elUnauthed);
+      return;
+    }
+
+    elName.textContent = currentUser.displayName || '—';
+    elEmail.textContent = currentUser.email || '(none)';
+    elAuthType.textContent = formatAuthType(currentUser);
+
+    // YouTube-only users (no email/password) — use type-to-confirm instead
+    isYouTubeOnly = !currentUser.email;
+    if (isYouTubeOnly) {
+      hide(passwordSection);
+      show(confirmSection);
+    }
+
+    show(elAuthed);
+  }
+
+  init();
+</script>

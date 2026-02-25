@@ -319,6 +319,7 @@ const { title, description = 'Citelines' } = Astro.props;
             <div class="auth-logged-in">
               <div class="display-name" id="user-display-name"></div>
               <a href="/dashboard" class="dash-link">Dashboard</a><br />
+              <a href="/account-settings" class="dash-link">Account Settings</a><br />
               <button class="auth-logout" id="logout-btn">Log Out</button>
             </div>
           </div>
@@ -380,9 +381,32 @@ const { title, description = 'Citelines' } = Astro.props;
             const u = JSON.parse(user);
             displayNameEl.textContent = u.displayName || u.email;
             setView('logged-in');
+            // Refresh user data from API in the background
+            refreshUserData(token);
           } catch { setView('signup'); }
         } else {
           setView('signup');
+        }
+      }
+
+      async function refreshUserData(token) {
+        try {
+          const res = await fetch(`${API}/auth/me`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+          });
+          if (res.status === 401) {
+            // Token expired or account deleted — log out
+            localStorage.removeItem('citelines_token');
+            localStorage.removeItem('citelines_user');
+            setView('signup');
+            return;
+          }
+          if (!res.ok) return;
+          const user = await res.json();
+          localStorage.setItem('citelines_user', JSON.stringify(user));
+          displayNameEl.textContent = user.displayName || user.email;
+        } catch {
+          // Network error — keep stale data, don't disrupt UX
         }
       }
 
