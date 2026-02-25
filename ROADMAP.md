@@ -17,12 +17,11 @@
 
 ## Phase 2 — Content & Design (citelines-site)
 - [ ] Define site purpose and copy
-- [ ] Design system / color palette
+- [ ] Brand assets: design system, color palette, icons, logos, favicon
 - [ ] Fill in About page content
 - [ ] Fill in Features page content
 - [ ] Fill in Contact page (form or email link)
 - [ ] SEO meta tags and Open Graph
-- [ ] Favicon finalized
 - [ ] Accessibility audit
 - [ ] Cross-browser/device testing
 
@@ -32,7 +31,11 @@
 - [x] Verify domain in Resend
 - [x] Implement email verification flow in youtube-annotator
 - [x] Email verification landing page on www.citelines.org
-- [ ] Personal inbox for citelines.org (Zoho or Google Workspace)
+- [x] Created shared org Gmail (citelines@gmail.com)
+- [x] Transferred Railway account ownership to citelines@gmail.com
+- [x] Transferred Resend account ownership to citelines@gmail.com
+- 🚧 Zoho Mail inbox for citelines.org (account created, blocked on DNS setup in Namecheap)
+- [ ] Migrate service accounts from citelines@gmail.com to @citelines.org once inbox is live
 
 ## Phase 4 — youtube-annotator UX
 - [x] Registration success screen (replaces staying on form)
@@ -68,7 +71,6 @@
 ## Phase 7 — Operations
 - [x] Measurement: extension activity metrics on admin dashboard
 - [ ] Pay for server hosting (Railway trial expiration)
-- [ ] Brand assets: icons, logos, site design
 
 ---
 
@@ -83,7 +85,6 @@ These have dedicated notes in `dev-docs/` (gitignored):
 ---
 
 ## Backlog / Ideas
-- Personal inbox: Zoho Mail (free) or Google Workspace ($6/mo)
 - Consider open-sourcing youtube-annotator after legal review
 
 ---
