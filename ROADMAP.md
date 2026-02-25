@@ -42,8 +42,13 @@
 - [x] Keyboard events don't leak to YouTube shortcuts when typing in sidebar
 - [x] Progress bar marker colors reflect login/logout state instantly
 - [x] Escape key and click-outside close the auth modal
-- [ ] Password reset flow (UI + landing page on citelines.org)
+- [ ] Forgot Password flow (Resend transactional email)
+  - [ ] Backend: `POST /api/auth/forgot-password` — generate token, send reset link via Resend
+  - [ ] Backend: `POST /api/auth/reset-password` — validate token, update password
+  - [ ] Reset password landing page on citelines.org (`/reset-password?token=...`)
+  - [ ] "Forgot password?" link in login form (extension sidebar + citelines.org)
 - [ ] Account settings (change display name, email, password)
+- [ ] User account self-delete flow (from account settings)
 
 ## Phase 5 — Core Features
 - [ ] (Add features here)
