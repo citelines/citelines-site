@@ -5,19 +5,17 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Home" description="Citelines — verified citations for online video">
   <div class="hero">
     <div class="quote-block">
-      <blockquote class="quote-text">"Expand the frame."</blockquote>
-      <div class="citation-card">
-        <div class="citation-marker" aria-hidden="true"></div>
+      <blockquote class="quote-text" id="quote-text"></blockquote>
+      <div class="citation-card" id="citation-card">
+        <div class="citation-marker" id="citation-marker" aria-hidden="true"></div>
         <div class="citation-body">
-          <div class="citation-icon">📄</div>
-          <div class="citation-content">
-            <span class="citation-title">Doppelganger: A Trip into the Mirror World</span>
-            <span class="citation-meta">Naomi Klein · 2023</span>
-            <span class="citation-meta">Farrar, Straus, and Giroux</span>
-          </div>
+          <div class="citation-icon" id="citation-icon"></div>
+          <div class="citation-content" id="citation-content"></div>
         </div>
       </div>
     </div>
+
+    <div class="carousel-dots" id="carousel-dots"></div>
 
     <a href="#" class="btn-cta">Get the Plugin</a>
 
@@ -53,16 +51,40 @@ import Layout from '../layouts/Layout.astro';
       margin: 0;
       border: none;
       padding: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .quote-text.fade-out {
+      opacity: 0;
     }
 
     .citation-card {
       position: absolute;
-      bottom: 0;
-      right: 0;
+      bottom: -3rem;
       display: flex;
       align-items: flex-start;
       gap: 0;
       text-align: left;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .citation-card.visible {
+      opacity: 1;
+    }
+
+    .citation-card.fade-out {
+      opacity: 0;
+    }
+
+    /* When marker is on the right, reverse the flex order */
+    .citation-card.marker-right {
+      flex-direction: row-reverse;
+    }
+
+    .citation-card.marker-right .citation-marker {
+      margin-right: 0;
+      margin-left: 10px;
     }
 
     .citation-marker {
@@ -107,6 +129,26 @@ import Layout from '../layouts/Layout.astro';
     .citation-meta {
       font-size: 0.8rem;
       color: #888;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d0d0d0;
+      transition: background 0.3s ease;
+      cursor: pointer;
+    }
+
+    .carousel-dot.active {
+      background: #666;
     }
 
     .btn-cta {
@@ -169,4 +211,145 @@ import Layout from '../layouts/Layout.astro';
       border-color: #999;
     }
   </style>
+
+  <script>
+    // Each quote has a horizontal position for the citation card.
+    // Positive = right of center (marker on left), negative = left of center (marker on right).
+    const quotes = [
+      {
+        text: '\u201cExpand the frame.\u201d',
+        icon: '\ud83d\udcc4',
+        title: 'Doppelganger: A Trip into the Mirror World',
+        meta: ['Naomi Klein \u00b7 2023', 'Farrar, Straus, and Giroux', 'pp. 70'],
+        offsetRight: '-4rem',
+      },
+      {
+        text: '\u201cPlaceholder Quotation B.\u201d',
+        icon: '\ud83d\udcc4',
+        title: 'Sample Citation B',
+        meta: ['Author B \u00b7 2024', 'Publisher B'],
+        offsetRight: '2rem',
+      },
+      {
+        text: '\u201cPlaceholder Quotation C.\u201d',
+        icon: '\ud83d\udcc4',
+        title: 'Sample Citation C',
+        meta: ['Author C \u00b7 2022', 'Publisher C'],
+        offsetRight: '-2rem',
+      },
+      {
+        text: '\u201cPlaceholder Quotation D.\u201d',
+        icon: '\ud83d\udcc4',
+        title: 'Sample Citation D',
+        meta: ['Author D \u00b7 2021', 'Publisher D'],
+        offsetRight: '4rem',
+      },
+      {
+        text: '\u201cPlaceholder Quotation E.\u201d',
+        icon: '\ud83d\udcc4',
+        title: 'Sample Citation E',
+        meta: ['Author E \u00b7 2020', 'Publisher E'],
+        offsetRight: '0rem',
+      },
+    ];
+
+    const quoteEl = document.getElementById('quote-text');
+    const cardEl = document.getElementById('citation-card');
+    const iconEl = document.getElementById('citation-icon');
+    const contentEl = document.getElementById('citation-content');
+    const dotsContainer = document.getElementById('carousel-dots');
+    let current = 0;
+    let timer = null;
+
+    // Build carousel dots
+    quotes.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => jumpTo(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    function updateDots(index) {
+      dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function renderCitation(q) {
+      iconEl.textContent = q.icon;
+      contentEl.innerHTML =
+        '<span class="citation-title">' + q.title + '</span>' +
+        q.meta.map(function(m) { return '<span class="citation-meta">' + m + '</span>'; }).join('');
+    }
+
+    function positionCard(q) {
+      // Parse the offset to determine side
+      var offset = parseFloat(q.offsetRight);
+      var isLeftOfCenter = offset > 0; // positive offsetRight = card shifts left = left of center
+
+      // Position: use right for right-of-center, left for left-of-center
+      if (isLeftOfCenter) {
+        // Card is left of center — marker goes on right side
+        cardEl.style.right = q.offsetRight;
+        cardEl.style.left = 'auto';
+        cardEl.classList.add('marker-right');
+      } else {
+        // Card is right of center — marker goes on left side (default)
+        cardEl.style.right = q.offsetRight;
+        cardEl.style.left = 'auto';
+        cardEl.classList.remove('marker-right');
+      }
+    }
+
+    function showQuote(index) {
+      var q = quotes[index];
+      quoteEl.textContent = q.text;
+      renderCitation(q);
+      positionCard(q);
+      updateDots(index);
+
+      // Quote appears immediately
+      quoteEl.classList.remove('fade-out');
+
+      // Citation card fades in after 1.5s
+      cardEl.classList.remove('visible');
+      setTimeout(function() {
+        cardEl.classList.add('visible');
+      }, 1500);
+    }
+
+    function cycleToNext() {
+      // Fade out both
+      quoteEl.classList.add('fade-out');
+      cardEl.classList.add('fade-out');
+
+      // After fade-out completes, swap content and show next
+      setTimeout(function() {
+        cardEl.classList.remove('visible', 'fade-out');
+        current = (current + 1) % quotes.length;
+        showQuote(current);
+      }, 400);
+    }
+
+    function jumpTo(index) {
+      if (index === current) return;
+      clearInterval(timer);
+
+      quoteEl.classList.add('fade-out');
+      cardEl.classList.add('fade-out');
+
+      setTimeout(function() {
+        cardEl.classList.remove('visible', 'fade-out');
+        current = index;
+        showQuote(current);
+        timer = setInterval(cycleToNext, 6000);
+      }, 400);
+    }
+
+    // Initial display
+    showQuote(0);
+
+    // Cycle every 6 seconds
+    timer = setInterval(cycleToNext, 6000);
+  </script>
 </Layout>
