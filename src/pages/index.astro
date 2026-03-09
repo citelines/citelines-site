@@ -4,7 +4,20 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Home" description="Citelines — verified citations for online video">
   <div class="hero">
-    <p class="tagline">Placeholder: one-line description of what Citelines is.</p>
+    <div class="quote-block">
+      <blockquote class="quote-text">"Expand the frame."</blockquote>
+      <div class="citation-card">
+        <div class="citation-marker" aria-hidden="true"></div>
+        <div class="citation-body">
+          <div class="citation-icon">📄</div>
+          <div class="citation-content">
+            <span class="citation-title">Doppelganger: A Trip into the Mirror World</span>
+            <span class="citation-meta">Naomi Klein · 2023</span>
+            <span class="citation-meta">Farrar, Straus, and Giroux</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <a href="#" class="btn-cta">Get the Plugin</a>
 
@@ -24,14 +37,78 @@ import Layout from '../layouts/Layout.astro';
       padding: 6rem 0;
     }
 
-    .tagline {
-      font-size: 1.25rem;
-      color: #555;
+    .quote-block {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .quote-text {
+      font-size: 2.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #1a1a1a;
+      letter-spacing: -0.02em;
+      margin: 0;
+      border: none;
+      padding: 0;
+    }
+
+    .citation-card {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 0;
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .citation-marker {
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 11px solid #0497a6;
+      filter: drop-shadow(0 0 4px rgba(4, 151, 166, 0.5));
+      flex-shrink: 0;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+
+    .citation-body {
+      display: flex;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #fafafa;
+      border-radius: 8px;
+      border-left: 3px solid #0497a6;
+    }
+
+    .citation-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .citation-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .citation-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .citation-meta {
+      font-size: 0.8rem;
+      color: #888;
     }
 
     .btn-cta {
       display: inline-block;
-      margin-top: 2.5rem;
+      margin-top: 3rem;
       padding: 0.9rem 2.5rem;
       background: #1a1a1a;
       color: #fff;

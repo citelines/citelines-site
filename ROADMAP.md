@@ -34,8 +34,19 @@
 - [x] Created shared org Gmail (citelines@gmail.com)
 - [x] Transferred Railway account ownership to citelines@gmail.com
 - [x] Transferred Resend account ownership to citelines@gmail.com
-- 🚧 Zoho Mail inbox for citelines.org (account created, blocked on DNS setup in Namecheap)
+- 🚧 Zoho Mail inbox for citelines.org (account created, MX records added, can receive email)
+  - [ ] Merge Zoho's SPF `include:` into existing SPF TXT record (only one SPF record allowed per domain)
+  - [ ] Add Zoho DKIM record
+  - [ ] Verify sending works without Gmail spam warning
 - [ ] Migrate service accounts from citelines@gmail.com to @citelines.org once inbox is live
+- [ ] Set up newsletter service (Zoho Campaigns or similar) for marketing emails
+  - [ ] Email signup form on citelines.org
+  - [ ] Connect to email service for periodic sends
+- [ ] Migrate hosting from GitHub Pages to Cloudflare Pages (IP protection)
+  - Connect citelines-site repo to Cloudflare Pages (Astro preset, `npm run build`, output `dist`)
+  - Add custom domain (`www.citelines.org`) in Cloudflare Pages
+  - Remove old GitHub Pages config and DNS records
+  - Make citelines-site repo private
 
 ## Phase 4 — youtube-annotator UX
 - [x] Registration success screen (replaces staying on form)
@@ -45,47 +56,34 @@
 - [x] Keyboard events don't leak to YouTube shortcuts when typing in sidebar
 - [x] Progress bar marker colors reflect login/logout state instantly
 - [x] Escape key and click-outside close the auth modal
-- [ ] Forgot Password flow (Resend transactional email)
-  - [ ] Backend: `POST /api/auth/forgot-password` — generate token, send reset link via Resend
-  - [ ] Backend: `POST /api/auth/reset-password` — validate token, update password
+- 🚧 Forgot Password flow (Resend transactional email)
+  - [x] Backend: `POST /api/auth/forgot-password` — generate token, send reset link via Resend
+  - [x] Backend: `POST /api/auth/reset-password` — validate token, update password
   - [ ] Reset password landing page on citelines.org (`/reset-password?token=...`)
-  - [ ] "Forgot password?" link in login form (extension sidebar + citelines.org)
-- [ ] Account settings (change display name, email, password)
-- [ ] User account self-delete flow (from account settings)
+  - [x] "Forgot password?" link in login form (extension sidebar)
+  - ⚠️ Not yet live-tested end-to-end (landing page missing)
+- [x] Account settings page on citelines.org (`/account-settings`)
+- [x] User account self-delete flow (implemented, not yet live-tested) — see youtube-annotator ROADMAP for details
 
-## Phase 5 — Core Features
-- 🚧 Support information hierarchy (creator vs viewer citations)
-- [ ] Editability of "mine" citations pre-submission for review
-- [ ] Creator Mode (better citation entry for creators who know what they want to cite)
-- [ ] "Save citation" / "save video" flow for viewers
-- [ ] Show videos and citations list in extension sidebar (currently just counts)
-- [ ] Website dashboard: "my citations" vs "saved citations"
-- [ ] Validate annotations to a timeblock (minimum granularity)
-- [ ] Zotero / Wikipedia citation integration (explore feasibility)
-
-## Phase 6 — Moderation, Policy & Trust
-- 🚧 Defenses against bad actors: logged-out (IP / fingerprint banning)
-- [ ] Draft Privacy Policy
-- [ ] Chrome Web Store submission
+## Phase 5 — Website Content
 - [ ] Documentation / Acknowledgements page — explain the moderation stack and credit providers:
   - [`obscenity`](https://github.com/jo3-l/obscenity) — display name profanity filtering (implemented)
   - [Google Safe Browsing API](https://developers.google.com/safe-browsing) — malicious URL detection (planned)
   - [Perspective API](https://perspectiveapi.com/) — citation text toxicity scoring (planned)
   - [IFTAS](https://about.iftas.org/trust-safety-services/) — supplemental spam/abuse lists (planned)
 
-## Phase 7 — Operations
-- [x] Measurement: extension activity metrics on admin dashboard
-- [ ] Pay for server hosting (Railway trial expiration)
+Note: Feature work, moderation, legal, and operations items are tracked in youtube-annotator/ROADMAP.md
 
 ---
 
 ## Open Questions / Future Work
 
-These have dedicated notes in `dev-docs/` (gitignored):
+Design docs live in `youtube-annotator/dev-docs/` (gitignored):
 
-- **Extension auto-update strategy** (`dev-docs/auto-update.md`) — how to push updates to test users now (unpacked), and how CWS auto-update works once published. Includes a lightweight polling approach for test users.
-- **Testing strategy** (`dev-docs/testing.md`) — when to add tests, what to test first (citation parsing, auth rules, save/retrieve cycle, E2E), and recommended stack (Vitest + Playwright).
-- **content.js refactor** (`dev-docs/content-js-refactor.md`) — content.js is 1,600 lines and handles everything. Doc covers how to split it into ~7 modules, the shared state problem, and whether to add a bundler (esbuild). Also notes two quick wins: fix an undeclared `viewOnlyAnnotations` variable and clean up scattered `[DEBUG]` console logs.
+- **Extension auto-update strategy** (`auto-update.md`)
+- **Testing strategy** (`testing.md`)
+- **content.js refactor** (`content-js-refactor.md`)
+- **Malicious URL blocklist** (`bad-url-block.md`)
 
 ---
 
