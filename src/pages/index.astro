@@ -16,6 +16,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
 
     <div class="carousel-dots" id="carousel-dots"></div>
+    <p>Citelines is a software application for interactive video citations.</p>
 
     <a href="#" class="btn-cta">Get the Plugin</a>
 
@@ -65,15 +66,18 @@ import Layout from '../layouts/Layout.astro';
       align-items: flex-start;
       gap: 0;
       text-align: left;
+    }
+
+    .citation-card .citation-body {
       opacity: 0;
       transition: opacity 0.4s ease;
     }
 
-    .citation-card.visible {
+    .citation-card.visible .citation-body {
       opacity: 1;
     }
 
-    .citation-card.fade-out {
+    .citation-card.fade-out .citation-body {
       opacity: 0;
     }
 
@@ -97,6 +101,11 @@ import Layout from '../layouts/Layout.astro';
       flex-shrink: 0;
       margin-top: 10px;
       margin-right: 10px;
+      transition: opacity 0.4s ease;
+    }
+
+    .citation-card.fade-out .citation-marker {
+      opacity: 0;
     }
 
     .citation-body {
@@ -135,7 +144,8 @@ import Layout from '../layouts/Layout.astro';
       display: flex;
       justify-content: center;
       gap: 8px;
-      margin-top: 1rem;
+      margin-top: 5rem;
+      margin-bottom: 3rem;
     }
 
     .carousel-dot {
@@ -228,14 +238,14 @@ import Layout from '../layouts/Layout.astro';
         icon: '\ud83d\udcc4',
         title: 'Sample Citation B',
         meta: ['Author B \u00b7 2024', 'Publisher B'],
-        offsetRight: '2rem',
+        offsetRight: '-2rem',
       },
       {
         text: '\u201cPlaceholder Quotation C.\u201d',
         icon: '\ud83d\udcc4',
         title: 'Sample Citation C',
         meta: ['Author C \u00b7 2022', 'Publisher C'],
-        offsetRight: '-2rem',
+        offsetRight: '25rem',
       },
       {
         text: '\u201cPlaceholder Quotation D.\u201d',

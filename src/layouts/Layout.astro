@@ -38,8 +38,19 @@ const { title, description = 'Citelines' } = Astro.props;
       nav .brand {
         font-weight: 700;
         font-size: 1.125rem;
-        color: inherit;
+        color: #0497a6;
         text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      nav .brand-line {
+        display: inline-block;
+        width: 2px;
+        height: 1.1em;
+        background: #e8943a;
+        margin: 0 1px;
+        border-radius: 1px;
       }
 
       nav a {
@@ -49,7 +60,7 @@ const { title, description = 'Citelines' } = Astro.props;
       }
 
       nav a:hover, nav a[aria-current="page"] {
-        color: #1a1a1a;
+        color: #0497a6;
       }
 
       nav .account-wrapper {
@@ -69,6 +80,25 @@ const { title, description = 'Citelines' } = Astro.props;
 
       nav .account-btn:hover {
         color: #1a1a1a;
+      }
+
+      nav .account-btn.logged-in {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #0497a6;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 700;
+        justify-content: center;
+        padding: 0;
+        letter-spacing: 0.5px;
+        line-height: 1;
+      }
+
+      nav .account-btn.logged-in:hover {
+        background: #05b3c4;
+        color: #fff;
       }
 
       .auth-dropdown {
@@ -246,7 +276,7 @@ const { title, description = 'Citelines' } = Astro.props;
   </head>
   <body>
     <nav>
-      <a class="brand" href="/">Citelines</a>
+      <a class="brand" href="/">Cite<span class="brand-line"></span>ines</a>
       <a href="/about" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>About</a>
       <a href="/get-involved" aria-current={Astro.url.pathname === '/get-involved' ? 'page' : undefined}>Get Involved</a>
       <a href="/blog" aria-current={Astro.url.pathname === '/blog' ? 'page' : undefined}>Blog</a>
@@ -359,6 +389,26 @@ const { title, description = 'Citelines' } = Astro.props;
         errorEl.classList.remove('visible');
       }
 
+      const defaultIcon = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" /><path d="M20 21a8 8 0 1 0-16 0" /></svg>`;
+
+      function getInitials(name) {
+        const words = name.trim().split(/\s+/);
+        return words.slice(0, 2).map(w => w[0].toUpperCase()).join('');
+      }
+
+      function updateToggleButton(user) {
+        if (user) {
+          const initials = getInitials(user.displayName || user.email);
+          toggle.innerHTML = initials;
+          toggle.classList.add('logged-in');
+          toggle.setAttribute('aria-label', `Logged in as ${user.displayName || user.email}`);
+        } else {
+          toggle.innerHTML = defaultIcon;
+          toggle.classList.remove('logged-in');
+          toggle.setAttribute('aria-label', 'Log in / Sign up');
+        }
+      }
+
       function setView(view) {
         [viewSignup, viewLogin, viewVerify, viewLoggedIn].forEach(v => v.classList.remove('active'));
         formsWrapper.style.display = (view === 'verify' || view === 'logged-in') ? 'none' : '';
@@ -378,11 +428,16 @@ const { title, description = 'Citelines' } = Astro.props;
           try {
             const u = JSON.parse(user);
             displayNameEl.textContent = u.displayName || u.email;
+            updateToggleButton(u);
             setView('logged-in');
             // Refresh user data from API in the background
             refreshUserData(token);
-          } catch { setView('signup'); }
+          } catch {
+            updateToggleButton(null);
+            setView('signup');
+          }
         } else {
+          updateToggleButton(null);
           setView('signup');
         }
       }
@@ -488,6 +543,7 @@ const { title, description = 'Citelines' } = Astro.props;
           loginForm.reset();
           setView('logged-in');
           displayNameEl.textContent = data.user.displayName || data.user.email;
+          updateToggleButton(data.user);
         } catch (err) {
           showError(err.message);
         } finally {
@@ -500,6 +556,7 @@ const { title, description = 'Citelines' } = Astro.props;
       logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('citelines_token');
         localStorage.removeItem('citelines_user');
+        updateToggleButton(null);
         setView('signup');
       });
 

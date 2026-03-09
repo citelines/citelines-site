@@ -3,35 +3,50 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="About" description="About Citelines — mission and team">
-  <h1>About</h1>
+  <h1 style="margin-bottom: 2rem;">About</h1>
 
-  <section class="about-section">
-    <h2>Mission</h2>
-    <p>Placeholder mission content. Coming soon.</p>
+  <p>
+  Would you trust the information in a nonfiction book if there were no reference to where the information came from? Bibliographies, quotations, and endnotes create trust through transparency. Their standardization holds authors accountable. Citational practices activate readers to seek knowledge beyond the text in their hands—they create lines of sight in the complex web of human knowledge. As Naomi Klein argues,
+  </p>
+
+  <div style="position: relative; max-width: 640px; margin: 2.5rem auto 4rem; padding-bottom: 4rem;">
+    <blockquote style="font-size: 2.25rem; font-weight: 700; line-height: 1.25; color: #1a1a1a; letter-spacing: -0.02em; margin: 0; border: none; padding: 0;">
+      &ldquo;Quoting is what we do to bring in the voices of others, to expand the frame, not to narrow it.&rdquo;
+    </blockquote>
+    <div style="position: absolute; margin-top: 1rem; bottom: -3rem; right: 0; display: flex; align-items: flex-start;">
+      <div style="width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 11px solid #0497a6; filter: drop-shadow(0 0 4px rgba(4, 151, 166, 0.5)); flex-shrink: 0; margin-top: 10px; margin-right: 10px;" aria-hidden="true"></div>
+      <div style="display: flex; gap: 10px; padding: 6px 16px; background: #fafafa; border-radius: 8px; border-left: 3px solid #0497a6;">
+        <div style="font-size: 20px; flex-shrink: 0; line-height: 1;">📄</div>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <span style="font-size: 0.95rem; font-weight: 600; color: #1a1a1a;">Doppelganger: A Trip into the Mirror World</span>
+          <span style="font-size: 0.8rem; color: #888;">Naomi Klein · 2023</span>
+          <span style="font-size: 0.8rem; color: #888;">Farrar, Straus, and Giroux</span>
+          <span style="font-size: 0.8rem; color: #888;">pp. 70</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>
+  Yet the internet has no such citational practice for image- and sound-based media—the most ubiquitous mediums of information today. Citelines therefore proposes a simple but powerful solution: we are building a browser plugin for interactive media citations, where creators can cite sources within their media, and the public can propose, create, and interact with them. Using deliberate, participatory, and human-centered methods, Citelines encourages creators and the public to co-create and sustain a robust library of sources for image, sound, and text in multimodal media.
+  </p>
+  <p>
+  In an era where it is getting harder to trust and verify what we see online, we must have public-facing infrastructures that help us determine the credibility of digital images, sounds, and information. By offering such an infrastructure, Citelines will help disrupt the doomscroll—the passive consumption of content—and encourage public curiosity, knowledge seeking, and knowledge creation. Citelines will help create more accountability, transparency, and interconnection among media makers, while improving internet safety and mass information literacy.
+  </p>
+
+  <section style="margin-bottom: 3rem;">
+    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Mission</h2>
+    <p style="color: #555; line-height: 1.7;">Our mission is to develop this tool and build a non-profit organization. We will:
+    <ul>
+    <li><b>Build.</b> Oversee the research, development, and testing of the tool.</li>
+    <li><b>Collaborate.</b> Form strategic partnerships with media creators, professional and academic stakeholders, and institutions.</li>
+    <li><b>Teach.</b> Create and disseminate media literacy curricula for all levels of education.</li>
+    </ul>
+    </p>
   </section>
 
-  <section class="about-section">
-    <h2>Team</h2>
-    <p>Placeholder team content. Coming soon.</p>
+  <section style="margin-bottom: 3rem;">
+    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Team</h2>
+    <p style="color: #555; line-height: 1.7;">Placeholder team content. Coming soon.</p>
   </section>
-
-  <style>
-    h1 {
-      margin-bottom: 2rem;
-    }
-
-    .about-section {
-      margin-bottom: 3rem;
-    }
-
-    .about-section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .about-section p {
-      color: #555;
-      line-height: 1.7;
-    }
-  </style>
 </Layout>
