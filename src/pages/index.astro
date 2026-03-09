@@ -22,7 +22,7 @@ import Layout from '../layouts/Layout.astro';
     <a href="#" class="btn-cta">Get the Plugin</a>
 
     <div class="secondary">
-      <a href="#" class="btn-secondary">Donate</a>
+      <a href="#" class="btn-secondary">Buy us a coffee</a>
 
       <form class="subscribe-form" onsubmit="event.preventDefault()">
         <input type="email" placeholder="you@example.com" required />
@@ -41,6 +41,7 @@ import Layout from '../layouts/Layout.astro';
       max-width: 640px;
       margin: 0 auto;
       position: relative;
+      padding-bottom: 5rem;
     }
 
     .quote-text {
@@ -55,10 +56,12 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .citation-card {
-      display: inline-flex;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: flex;
       align-items: flex-start;
       gap: 0;
-      margin-top: 1.5rem;
       text-align: left;
     }
 
