@@ -87,6 +87,13 @@ Design docs live in `youtube-annotator/dev-docs/` (gitignored):
 
 ---
 
+## My Dashboard — Creator Tools
+- [ ] Creator view on My Dashboard: list creator's videos with citation counts, drill into per-video citation management
+- [ ] Review viewer-contributed citations: remove, edit, flag for review
+- [ ] Give props/gratitude to viewer citations (visual badge/highlight)
+- [ ] Same backend endpoints as the YouTube Studio extension sidebar — both surfaces share the API
+- See `youtube-annotator/ROADMAP.md` Phase 4A for full creator tools spec and mockups (`youtube-annotator/mockups/option-a-sidebar.html`)
+
 ## Backlog / Ideas
 - Consider open-sourcing youtube-annotator after legal review
 
