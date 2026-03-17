@@ -16,11 +16,11 @@ import Layout from '../layouts/Layout.astro';
   Would you trust the information in a nonfiction book if there were no reference to where the information came from? Bibliographies, quotations, and endnotes create trust through transparency. Their standardization holds authors accountable. Citational practices activate readers to seek knowledge beyond the text in their hands—they create lines of sight in the complex web of human knowledge. As Naomi Klein argues,
   </p>
 
-  <div style="position: relative; max-width: 640px; margin: 2.5rem auto 4rem; padding-bottom: 4rem;">
+  <div class="about-quote-block" style="position: relative; max-width: 640px; margin: 2.5rem auto 4rem; padding-bottom: 4rem;">
     <blockquote style="font-size: 2.25rem; font-weight: 700; line-height: 1.25; color: #1a1a1a; letter-spacing: -0.02em; margin: 0; border: none; padding: 0;">
       &ldquo;Quoting is what we do to bring in the voices of others, to expand the frame, not to narrow it.&rdquo;
     </blockquote>
-    <div style="position: absolute; margin-top: 1rem; bottom: -3rem; right: 0; display: flex; align-items: flex-start;">
+    <div class="about-citation" style="position: absolute; margin-top: 1rem; bottom: -3rem; right: 0; display: flex; align-items: flex-start;">
       <div style="width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 11px solid #0497a6; filter: drop-shadow(0 0 4px rgba(4, 151, 166, 0.5)); flex-shrink: 0; margin-top: 10px; margin-right: 10px;" aria-hidden="true"></div>
       <div style="display: flex; gap: 10px; padding: 6px 16px; background: #fafafa; border-radius: 8px; border-left: 3px solid #0497a6;">
         <div style="font-size: 20px; flex-shrink: 0; line-height: 1;">📄</div>
@@ -104,6 +104,24 @@ import Layout from '../layouts/Layout.astro';
   @media (max-width: 1440px) {
     .toc {
       display: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .about-quote-block {
+      padding-bottom: 0 !important;
+      margin-bottom: 1rem !important;
+    }
+
+    .about-quote-block blockquote {
+      font-size: 1.5rem !important;
+    }
+
+    .about-citation {
+      position: relative !important;
+      bottom: auto !important;
+      right: auto !important;
+      margin-top: 1.5rem !important;
     }
   }
 </style>

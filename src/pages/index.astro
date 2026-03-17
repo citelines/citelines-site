@@ -220,6 +220,62 @@ import Layout from '../layouts/Layout.astro';
       outline: none;
       border-color: #999;
     }
+
+    @media (max-width: 720px) {
+      .hero {
+        padding: 3rem 0;
+      }
+
+      .quote-block {
+        padding-bottom: 4rem;
+      }
+
+      .quote-text {
+        font-size: 1.75rem;
+      }
+
+      .citation-card {
+        position: relative;
+        bottom: auto;
+        right: auto !important;
+        left: auto !important;
+        margin-top: 1.5rem;
+        justify-content: center;
+      }
+
+      .citation-body {
+        padding: 10px 12px;
+      }
+
+      .citation-title {
+        font-size: 0.85rem;
+      }
+
+      .citation-meta {
+        font-size: 0.7rem;
+      }
+
+      .carousel-dots {
+        margin-top: 2rem;
+      }
+
+      .secondary {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0 1rem;
+      }
+
+      .subscribe-form {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .subscribe-form input {
+        width: auto;
+        flex: 1;
+        min-width: 0;
+      }
+    }
   </style>
 
   <script>
