@@ -4,18 +4,87 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Home" description="Citelines — verified citations for online video">
   <div class="hero">
-    <div class="quote-block">
-      <blockquote class="quote-text" id="quote-text"></blockquote>
-      <div class="citation-card" id="citation-card">
-        <div class="citation-marker" id="citation-marker" aria-hidden="true"></div>
-        <div class="citation-body">
-          <div class="citation-icon" id="citation-icon"></div>
-          <div class="citation-content" id="citation-content"></div>
+    <div class="player-demo-layout">
+      <div class="player" id="demo-player">
+        <!-- Video area -->
+        <div class="player-screen">
+          <div class="player-quote" id="player-quote"></div>
         </div>
+
+        <!-- Progress bar area -->
+        <div class="player-progress-area">
+          <!-- Markers sit above the bar -->
+          <div class="player-markers" id="player-markers"></div>
+          <!-- Progress bar -->
+          <div class="player-progress-track">
+            <div class="player-progress-fill"></div>
+            <div class="player-progress-scrubber"></div>
+          </div>
+        </div>
+
+        <!-- Controls bar -->
+        <div class="player-controls">
+          <div class="player-controls-left">
+            <svg class="ctrl-play" width="16" height="18" viewBox="0 0 16 18"><polygon points="0,0 0,18 16,9" fill="#fff"/></svg>
+            <span class="ctrl-time">3:24 / 10:15</span>
+            <svg class="ctrl-vol" width="18" height="14" viewBox="0 0 18 14">
+              <rect x="0" y="4" width="3" height="6" rx="0.5" fill="#fff"/>
+              <polygon points="3,3 8,0 8,14 3,11" fill="#fff"/>
+              <path d="M10,3 Q13,7 10,11" stroke="#fff" stroke-width="1.2" fill="none"/>
+            </svg>
+          </div>
+          <div class="player-controls-right">
+            <svg class="ctrl-gear" width="16" height="16" viewBox="0 0 16 16">
+              <circle cx="8" cy="8" r="5.5" stroke="#fff" stroke-width="1.5" fill="none"/>
+              <circle cx="8" cy="8" r="2" fill="#fff"/>
+            </svg>
+            <svg class="ctrl-fs" width="16" height="14" viewBox="0 0 16 14">
+              <path d="M1,4 L1,1 L4,1" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M12,1 L15,1 L15,4" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M1,10 L1,13 L4,13" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M12,13 L15,13 L15,10" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Citelines FAB buttons -->
+        <div class="player-fabs">
+          <div class="player-fab">
+            <svg width="36" height="36" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="18" fill="rgba(4,151,166,0.9)"/>
+              <circle cx="18" cy="13" r="4.5" fill="none" stroke="#000" stroke-width="1.5"/>
+              <path d="M9,27.5a9,9 0 0 1 18,0" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="player-fab">
+            <svg width="36" height="36" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="18" fill="rgba(4,151,166,0.9)"/>
+              <line x1="11" y1="12" x2="25" y2="12" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+              <line x1="11" y1="18" x2="25" y2="18" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+              <line x1="11" y1="24" x2="25" y2="24" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="player-fab">
+            <svg width="36" height="36" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="18" fill="rgba(4,151,166,0.9)"/>
+              <line x1="18" y1="10" x2="18" y2="26" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="10" y1="18" x2="26" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popup card (beside the player) -->
+      <div class="demo-popup" id="demo-popup">
+        <div class="demo-popup-arrow" id="demo-popup-arrow"></div>
+        <div class="demo-popup-header">
+          <span class="demo-popup-timestamp" id="demo-popup-timestamp"></span>
+          <span class="demo-popup-close">×</span>
+        </div>
+        <div class="demo-popup-citation" id="demo-popup-citation"></div>
       </div>
     </div>
 
-    <div class="carousel-dots" id="carousel-dots"></div>
     <p>A browser extension that creates a collaborative citation tool on videos. Add timestamped citations to a video. All users with the extension see citations from everyone.</p>
 
     <a href="/get-involved#get-the-plugin" class="btn-cta">Get the Plugin</a>
@@ -33,137 +102,265 @@ import Layout from '../layouts/Layout.astro';
   <style is:global>
     .hero {
       text-align: center;
-      padding: 6rem 0;
+      padding: 4rem 0;
     }
 
-    .quote-block {
-      max-width: 640px;
-      margin: 0 auto;
-      position: relative;
-      padding-bottom: 5rem;
-    }
-
-    .quote-text {
-      font-size: 2.75rem;
-      font-weight: 700;
-      line-height: 1.2;
-      color: #1a1a1a;
-      letter-spacing: -0.02em;
-      margin: 0;
-      border: none;
-      padding: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .quote-text.fade-out {
-      opacity: 0;
-    }
-
-    .citation-card {
-      position: absolute;
-      bottom: -3rem;
+    /* === Player demo layout === */
+    .player-demo-layout {
       display: flex;
-      align-items: flex-start;
-      gap: 0;
-      text-align: left;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 0 auto 2rem;
     }
 
-    .citation-card .citation-body {
-      opacity: 0;
+    .player {
+      position: relative;
+      background: #0f0f0f;
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9.5;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .player-screen {
+      flex: 1;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 3.5rem 2rem 2rem;
+      position: relative;
+    }
+
+    .player-quote {
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.35);
+      line-height: 1.5;
+      text-align: center;
       transition: opacity 0.4s ease;
+      max-width: 420px;
     }
 
-    .citation-card.visible .citation-body {
+    .player-quote.fade-out {
+      opacity: 0;
+    }
+
+    /* === Progress area === */
+    .player-progress-area {
+      position: relative;
+      height: 16px;
+      background: #0f0f0f;
+      padding: 0 16px;
+    }
+
+    .player-markers {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: -2px;
+      height: 12px;
+    }
+
+    .player-marker {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 10px solid #888;
+      transform: translateX(-50%);
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      filter: drop-shadow(0 0 3px rgba(136, 136, 136, 0.6));
+    }
+
+    .player-marker:hover {
+      transform: translateX(-50%) scale(1.3);
+    }
+
+    .player-marker.teal {
+      border-bottom-color: #0497a6;
+      filter: drop-shadow(0 0 3px rgba(4, 151, 166, 0.6));
+    }
+
+    .player-marker.active {
+      transform: translateX(-50%) scale(1.3);
+    }
+
+    .player-progress-track {
+      position: absolute;
+      bottom: 4px;
+      left: 16px;
+      right: 16px;
+      height: 3px;
+      background: #333;
+      border-radius: 1.5px;
+    }
+
+    .player-progress-fill {
+      width: 33.3%;
+      height: 100%;
+      background: #ff0000;
+      border-radius: 1.5px;
+    }
+
+    .player-progress-scrubber {
+      position: absolute;
+      top: 50%;
+      left: 33.3%;
+      width: 12px;
+      height: 12px;
+      background: #ff0000;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* === Controls bar === */
+    .player-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 16px 8px;
+      background: #0f0f0f;
+    }
+
+    .player-controls-left,
+    .player-controls-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ctrl-time {
+      font-size: 11px;
+      color: #aaa;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+
+    /* === FAB buttons === */
+    .player-fabs {
+      position: absolute;
+      right: 10px;
+      bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* === Popup (side panel) === */
+    .demo-popup {
+      flex: 0 0 260px;
+      position: relative;
+      background: rgba(28, 28, 28, 0.95);
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'Roboto', Arial, sans-serif;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      text-align: left;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .demo-popup.visible {
       opacity: 1;
     }
 
-    .citation-card.fade-out .citation-body {
+    .demo-popup.fade-out {
       opacity: 0;
     }
 
-    /* When marker is on the right, reverse the flex order */
-    .citation-card.marker-right {
-      flex-direction: row-reverse;
-    }
-
-    .citation-card.marker-right .citation-marker {
-      margin-right: 0;
-      margin-left: 10px;
-    }
-
-    .citation-marker {
+    /* Left-pointing arrow on the popup */
+    .demo-popup-arrow {
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 0;
       height: 0;
-      border-left: 7px solid transparent;
-      border-right: 7px solid transparent;
-      border-bottom: 11px solid #0497a6;
-      filter: drop-shadow(0 0 4px rgba(4, 151, 166, 0.5));
-      flex-shrink: 0;
-      margin-top: 10px;
-      margin-right: 10px;
-      transition: opacity 0.4s ease;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 8px solid #3a3a3a;
     }
 
-    .citation-card.fade-out .citation-marker {
-      opacity: 0;
+    .demo-popup-arrow::after {
+      content: '';
+      position: absolute;
+      left: 1.5px;
+      top: -7px;
+      width: 0;
+      height: 0;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-right: 7px solid rgba(28, 28, 28, 0.95);
     }
 
-    .citation-body {
+    .demo-popup-header {
       display: flex;
-      gap: 10px;
-      padding: 12px 16px;
-      background: #fafafa;
-      border-radius: 8px;
-      border-left: 3px solid #0497a6;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #3a3a3a;
     }
 
-    .citation-icon {
-      font-size: 20px;
-      flex-shrink: 0;
+    .demo-popup-timestamp {
+      font-size: 12px;
+      color: #aaa;
+      font-weight: 500;
+    }
+
+    .demo-popup-close {
+      color: #888;
+      font-size: 18px;
       line-height: 1;
     }
 
-    .citation-content {
+    .demo-popup-citation {
+      display: flex;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      border-left: 3px solid #0497a6;
+    }
+
+    .demo-popup-citation.other {
+      border-left-color: #444;
+    }
+
+    .demo-citation-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .demo-citation-info {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
 
-    .citation-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #1a1a1a;
+    .demo-citation-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
     }
 
-    .citation-meta {
-      font-size: 0.8rem;
-      color: #888;
+    .demo-citation-meta {
+      font-size: 11px;
+      color: #999;
     }
 
-    .carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 5rem;
-      margin-bottom: 3rem;
-    }
-
-    .carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #d0d0d0;
-      transition: background 0.3s ease;
-      cursor: pointer;
-    }
-
-    .carousel-dot.active {
-      background: #666;
-    }
-
+    /* === CTA / Secondary === */
     .btn-cta {
       display: inline-block;
-      margin-top: 3rem;
+      margin-top: 2rem;
       padding: 0.9rem 2.5rem;
       background: #1a1a1a;
       color: #fff;
@@ -223,40 +420,44 @@ import Layout from '../layouts/Layout.astro';
 
     @media (max-width: 720px) {
       .hero {
-        padding: 3rem 0;
+        padding: 2rem 0;
       }
 
-      .quote-block {
-        padding-bottom: 4rem;
+      .player-demo-layout {
+        flex-direction: column;
+        gap: 1rem;
       }
 
-      .quote-text {
-        font-size: 1.75rem;
+      .demo-popup {
+        flex: none;
+        width: 100%;
       }
 
-      .citation-card {
-        position: relative;
-        bottom: auto;
-        right: auto !important;
-        left: auto !important;
-        margin-top: 1.5rem;
-        justify-content: center;
+      .demo-popup-arrow {
+        display: none;
       }
 
-      .citation-body {
-        padding: 10px 12px;
-      }
-
-      .citation-title {
+      .player-quote {
         font-size: 0.85rem;
+        padding: 0 0.5rem;
       }
 
-      .citation-meta {
-        font-size: 0.7rem;
+      .demo-citation-title {
+        font-size: 11px;
       }
 
-      .carousel-dots {
-        margin-top: 2rem;
+      .demo-citation-meta {
+        font-size: 10px;
+      }
+
+      .player-fabs {
+        right: 6px;
+        bottom: 50px;
+      }
+
+      .player-fabs svg {
+        width: 28px;
+        height: 28px;
       }
 
       .secondary {
@@ -279,143 +480,98 @@ import Layout from '../layouts/Layout.astro';
   </style>
 
   <script>
-    // Each quote has a horizontal position for the citation card.
-    // Positive = right of center (marker on left), negative = left of center (marker on right).
-    const quotes = [
-      {
-        text: '\u201cExpand the frame.\u201d',
-        icon: '\ud83d\udcc4',
-        title: 'Doppelganger: A Trip into the Mirror World',
-        meta: ['Naomi Klein \u00b7 2023', 'Farrar, Straus, and Giroux', 'pp. 70'],
-        offsetRight: '-4rem',
-      },
-      {
-        text: '\u201cPlaceholder Quotation B.\u201d',
-        icon: '\ud83d\udcc4',
-        title: 'Sample Citation B',
-        meta: ['Author B \u00b7 2024', 'Publisher B'],
-        offsetRight: '-2rem',
-      },
-      {
-        text: '\u201cPlaceholder Quotation C.\u201d',
-        icon: '\ud83d\udcc4',
-        title: 'Sample Citation C',
-        meta: ['Author C \u00b7 2022', 'Publisher C'],
-        offsetRight: '25rem',
-      },
-      {
-        text: '\u201cPlaceholder Quotation D.\u201d',
-        icon: '\ud83d\udcc4',
-        title: 'Sample Citation D',
-        meta: ['Author D \u00b7 2021', 'Publisher D'],
-        offsetRight: '4rem',
-      },
-      {
-        text: '\u201cPlaceholder Quotation E.\u201d',
-        icon: '\ud83d\udcc4',
-        title: 'Sample Citation E',
-        meta: ['Author E \u00b7 2020', 'Publisher E'],
-        offsetRight: '0rem',
-      },
+    // Each marker has a position, color, and associated quote
+    const markers = [
+      { pos: 12, teal: true, text: '\u201cPlaceholder Quotation A.\u201d', timestamp: '1:12', icon: '\ud83d\udcc4', title: 'Sample Citation A', meta: ['Author A \u00b7 2024', 'Publisher A'] },
+      { pos: 20, teal: false, text: '\u201cPlaceholder Quotation B.\u201d', timestamp: '2:05', icon: '\ud83d\udcc4', title: 'Sample Citation B', meta: ['Author B \u00b7 2022', 'Publisher B'] },
+      { pos: 35, teal: false, text: '\u201cPlaceholder Quotation C.\u201d', timestamp: '3:02', icon: '\ud83d\udcc4', title: 'Sample Citation C', meta: ['Author C \u00b7 2023', 'Publisher C'] },
+      { pos: 42, teal: true, text: '\u201cQuoting is what we do to bring in the voices of others, to expand the frame, not to narrow it.\u201d', timestamp: '3:24', icon: '\ud83d\udcc4', title: 'Doppelganger: A Trip into the Mirror World', meta: ['Naomi Klein \u00b7 2023', 'Farrar, Straus, and Giroux \u00b7 pp. 70'] },
+      { pos: 62, teal: true, text: '\u201cPlaceholder Quotation D.\u201d', timestamp: '4:30', icon: '\ud83d\udcc4', title: 'Sample Citation D', meta: ['Author D \u00b7 2021', 'Publisher D'] },
+      { pos: 78, teal: false, text: '\u201cPlaceholder Quotation E.\u201d', timestamp: '6:48', icon: '\ud83d\udcc4', title: 'Sample Citation E', meta: ['Author E \u00b7 2020', 'Publisher E'] },
     ];
 
-    const quoteEl = document.getElementById('quote-text');
-    const cardEl = document.getElementById('citation-card');
-    const iconEl = document.getElementById('citation-icon');
-    const contentEl = document.getElementById('citation-content');
-    const dotsContainer = document.getElementById('carousel-dots');
-    let current = 0;
-    let timer = null;
+    // Only markers with quotes are interactive
+    const interactiveIndices = markers.map((m, i) => m.text ? i : null).filter(i => i !== null);
 
-    // Build carousel dots
-    quotes.forEach((_, i) => {
-      const dot = document.createElement('div');
-      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-      dot.addEventListener('click', () => jumpTo(i));
-      dotsContainer.appendChild(dot);
+    const markersEl = document.getElementById('player-markers');
+    const quoteEl = document.getElementById('player-quote');
+    const popupEl = document.getElementById('demo-popup');
+    const popupTimestamp = document.getElementById('demo-popup-timestamp');
+    const popupCitation = document.getElementById('demo-popup-citation');
+
+    // Build marker elements
+    const markerEls = [];
+    markers.forEach((m, i) => {
+      const el = document.createElement('div');
+      el.className = 'player-marker' + (m.teal ? ' teal' : '');
+      el.style.left = m.pos + '%';
+      if (m.text) {
+        el.addEventListener('click', () => jumpTo(interactiveIndices.indexOf(i)));
+      }
+      markersEl.appendChild(el);
+      markerEls.push(el);
     });
 
-    function updateDots(index) {
-      dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
-    }
+    let currentCycle = 0; // index into interactiveIndices
+    let timer = null;
 
-    function renderCitation(q) {
-      iconEl.textContent = q.icon;
-      contentEl.innerHTML =
-        '<span class="citation-title">' + q.title + '</span>' +
-        q.meta.map(function(m) { return '<span class="citation-meta">' + m + '</span>'; }).join('');
-    }
+    function showByMarker(markerIdx) {
+      const m = markers[markerIdx];
 
-    function positionCard(q) {
-      // Parse the offset to determine side
-      var offset = parseFloat(q.offsetRight);
-      var isLeftOfCenter = offset > 0; // positive offsetRight = card shifts left = left of center
-
-      // Position: use right for right-of-center, left for left-of-center
-      if (isLeftOfCenter) {
-        // Card is left of center — marker goes on right side
-        cardEl.style.right = q.offsetRight;
-        cardEl.style.left = 'auto';
-        cardEl.classList.add('marker-right');
-      } else {
-        // Card is right of center — marker goes on left side (default)
-        cardEl.style.right = q.offsetRight;
-        cardEl.style.left = 'auto';
-        cardEl.classList.remove('marker-right');
-      }
-    }
-
-    function showQuote(index) {
-      var q = quotes[index];
-      quoteEl.textContent = q.text;
-      renderCitation(q);
-      positionCard(q);
-      updateDots(index);
-
-      // Quote appears immediately
+      // Quote text
       quoteEl.classList.remove('fade-out');
+      quoteEl.textContent = m.text;
 
-      // Citation card fades in after 1.5s
-      cardEl.classList.remove('visible');
+      // Highlight marker
+      markerEls.forEach(el => el.classList.remove('active'));
+      markerEls[markerIdx].classList.add('active');
+
+      // Popup content
+      popupTimestamp.textContent = m.timestamp;
+      popupCitation.className = 'demo-popup-citation' + (m.teal ? '' : ' other');
+      popupCitation.innerHTML =
+        '<span class="demo-citation-icon">' + m.icon + '</span>' +
+        '<span class="demo-citation-info">' +
+          '<span class="demo-citation-title">' + m.title + '</span>' +
+          m.meta.map(function(x) { return '<span class="demo-citation-meta">' + x + '</span>'; }).join('') +
+        '</span>';
+
+      // Fade in
+      popupEl.classList.remove('visible', 'fade-out');
       setTimeout(function() {
-        cardEl.classList.add('visible');
-      }, 1500);
+        popupEl.classList.add('visible');
+      }, 800);
     }
 
     function cycleToNext() {
-      // Fade out both
       quoteEl.classList.add('fade-out');
-      cardEl.classList.add('fade-out');
+      popupEl.classList.add('fade-out');
 
-      // After fade-out completes, swap content and show next
       setTimeout(function() {
-        cardEl.classList.remove('visible', 'fade-out');
-        current = (current + 1) % quotes.length;
-        showQuote(current);
+        popupEl.classList.remove('visible', 'fade-out');
+        markerEls.forEach(function(el) { el.classList.remove('active'); });
+        currentCycle = (currentCycle + 1) % interactiveIndices.length;
+        showByMarker(interactiveIndices[currentCycle]);
       }, 400);
     }
 
-    function jumpTo(index) {
-      if (index === current) return;
+    function jumpTo(cycleIndex) {
+      if (cycleIndex === currentCycle) return;
       clearInterval(timer);
 
       quoteEl.classList.add('fade-out');
-      cardEl.classList.add('fade-out');
+      popupEl.classList.add('fade-out');
 
       setTimeout(function() {
-        cardEl.classList.remove('visible', 'fade-out');
-        current = index;
-        showQuote(current);
+        popupEl.classList.remove('visible', 'fade-out');
+        markerEls.forEach(function(el) { el.classList.remove('active'); });
+        currentCycle = cycleIndex;
+        showByMarker(interactiveIndices[currentCycle]);
         timer = setInterval(cycleToNext, 6000);
       }, 400);
     }
 
-    // Initial display
-    showQuote(0);
-
-    // Cycle every 6 seconds
+    showByMarker(interactiveIndices[0]);
     timer = setInterval(cycleToNext, 6000);
   </script>
 </Layout>
