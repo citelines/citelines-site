@@ -5,28 +5,157 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Get Involved" description="Get involved with Citelines">
   <h1 style="margin-bottom: 2rem;">Get Involved</h1>
 
+  <nav class="toc" aria-label="Table of contents">
+    <ul>
+      <li><a href="#use-the-plugin">Use the Plugin</a></li>
+      <li class="nested"><a href="#get-the-plugin">Get the Plugin</a></li>
+      <li class="nested"><a href="#video-viewers">Video Viewers</a></li>
+      <li class="nested"><a href="#video-creators">Video Creators</a></li>
+      <li><a href="#developers">Developers</a></li>
+    </ul>
+  </nav>
+
   <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Video Creators</h2>
+    <h2 id="use-the-plugin" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Use the Plugin</h2>
+    <h3 id="get-the-plugin" style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">Get the Plugin</h3>
+    <p style="color: #555; line-height: 1.7; margin-bottom: 1.5rem;">Install the Citelines Chrome extension to view and add citations on YouTube videos.</p>
+
+    <ol style="color: #555; line-height: 1.8; padding-left: 1.25rem;">
+      <li style="margin-bottom: 1.5rem;">
+        <strong>Download the Extension</strong><br />
+        Go to the <a href="https://github.com/citelines/citelines-extension" style="color: #0497a6;">Citelines Extension GitHub repo</a>. Click the green <strong>Code</strong> button, then <strong>Download ZIP</strong>. Open the ZIP to get the <code>citelines-extension-master</code> folder.
+        <br /><img src="/images/download-zip.png" alt="GitHub Download ZIP button" style="max-width: 500px; margin-top: 0.75rem; border: 1px solid #ddd; border-radius: 4px;" />
+      </li>
+      <li style="margin-bottom: 1.5rem;">
+        <strong>Open Chrome Extensions Page</strong><br />
+        Navigate to <code>chrome://extensions</code> in your Chrome browser.
+      </li>
+      <li style="margin-bottom: 1.5rem;">
+        <strong>Enable Developer Mode</strong><br />
+        Toggle the <strong>Developer mode</strong> switch in the top-right corner.
+        <br /><img src="/images/chrome-extensions-tab.png" alt="Chrome extensions page with Developer mode and Load unpacked" style="max-width: 500px; margin-top: 0.75rem; border: 1px solid #ddd; border-radius: 4px;" />
+      </li>
+      <li style="margin-bottom: 1.5rem;">
+        <strong>Load the extension</strong><br />
+        Click <strong>Load unpacked</strong> (shown in the screenshot above) and select the <code>citelines-extension-master</code> folder.
+      </li>
+    </ol>
+<h3 id="video-viewers" style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">Video Viewers</h3>
+    <p style="color: #555; line-height: 1.7;">After installing the plugin:</p>
+    <ol style="color: #555; line-height: 1.8; padding-left: 1.25rem;">
+      <li>
+        <strong>Go to YouTube</strong><br />
+        View any YouTube video.
+        <ul>
+          <li>The appearance of <strong>three buttons</strong> in the bottom right of the video player means the plugin is loaded.</li>
+          <li>If this is your first time using Citelines, or if you have not created an account, those icons will be <strong>grey</strong>. You do not need an account to use Citelines.</li>
+          <li>To <strong>create or log into an account</strong>, click the button with the silhouette on it. If you are logged in to your Citelines account, these buttons will be <strong>teal</strong>. If you have connected your YouTube account, and are viewing a video that you created, they will be <strong>orange</strong>.</li>
+          <li>To <strong>add a citation</strong>, move the the video player's playhead to the desired timestamp. Then click the "+" button.
+          <li>To <strong>view citations</strong>, click on the triangular markers that appear on the progress bar. If no citations exist on the video yet, there will be no markers. The markers' color corresponds to user ownership described above.</li>
+          <li>To view the <strong>bibliography</strong> of the video, click the button with three lines on it. It presents all citations on the video in chronological order.</li>
+        </ul>
+        <br /><img src="/images/initiated-citelines-ux.png" alt="View of the Citelines plugin on a blank YouTube video." style="max-width: 500px; margin-top: 0.75rem; border: 1px solid #ddd; border-radius: 4px;" />
+      </li>
+    </ol>
+<h3 id="video-creators" style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">Video Creators</h3>
+    <p style="color: #555; line-height: 1.7;">After installing the plugin:</p>
+    
+    <ol style="color: #555; line-height: 1.8; padding-left: 1.25rem;">
+      <li>
+        <strong>Go to YouTube</strong><br />
+        <ul>
+          <li>Perform your normal upload and/or edit steps for a YouTube video you've created. On the "Video Details" page, you should see the Citelines creator tools panel on the right side of the screen, where you can add citations to your video.</li>
+          <li>Upon clicking the <strong>Add Citation</strong> button, you can navigate to your YouTube video and you will see your citations, in orange, as triangular markers on the progress bar.</li>
+          <li>Adding citations from the Studio / Video Details page is more efficient for a video creator. However, you can also add citations simply from viewing the video, like any other Citelines viewer. If you have connected your YouTube account, your citations on your video will appear orange to any Citelines user viewing it.</li>
+        </ul>
+        <br /><img src="/images/creator-tools-sidebar.png" alt="Citelines creator tools righthand sidebar as seen in YouTube Studio, Video Details page" style="max-width: 250px; margin-top: 0.75rem; border: 1px solid #ddd; border-radius: 4px;" />
+      </li>
+    </ol>
+  </section>
+
+  <section style="margin-bottom: 3rem;">
     <p style="color: #555; line-height: 1.7;"></p>
   </section>
 
   <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Video Viewers</h2>
-    <p style="color: #555; line-height: 1.7;"></p>
-  </section>
-
-  <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Developers</h2>
-    <p style="color: #555; line-height: 1.7;"></p>
-  </section>
-
-  <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Email List</h2>
-    <p style="color: #555; line-height: 1.7;"></p>
-  </section>
-
-  <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Donations</h2>
-    <p style="color: #555; line-height: 1.7;"></p>
+    <h2 id="developers" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Developers</h2>
+    <p style="color: #555; line-height: 1.7;">More information coming soon.</p>
   </section>
 </Layout>
+
+<style>
+  .toc {
+    position: fixed;
+    top: 120px;
+    left: max(1rem, calc((100vw - 860px) / 2 - 260px));
+    width: 220px;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 2px solid #eee;
+    padding-left: 0.75rem;
+  }
+
+  .toc li {
+    margin-bottom: 0.35rem;
+  }
+
+  .toc li.nested {
+    padding-left: 0.75rem;
+  }
+
+  .toc a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .toc a:hover {
+    color: #222;
+  }
+
+  .toc a.active {
+    color: #0497a6;
+    font-weight: 600;
+  }
+
+  @media (max-width: 1440px) {
+    .toc {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const tocLinks = document.querySelectorAll('.toc a');
+  if (tocLinks.length > 0) {
+    const ids = Array.from(tocLinks).map(a => a.getAttribute('href').slice(1));
+    const headings = ids
+      .map(id => document.getElementById(id))
+      .filter(el => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(a => a.classList.remove('active'));
+            const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+            if (active) active.classList.add('active');
+          }
+        }
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+    );
+
+    for (const h of headings) {
+      observer.observe(h);
+    }
+  }
+</script>

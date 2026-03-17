@@ -5,8 +5,21 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Documentation" description="Citelines technical documentation">
   <h1 style="margin-bottom: 2rem;">Documentation</h1>
 
+  <nav class="toc" aria-label="Table of contents">
+    <ul>
+      <li><a href="#source-code">Source Code</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#claude-code">Claude Code</a></li>
+      <li><a href="#in-progress">In Progress</a></li>
+      <li><a href="#future-work">Future Work</a></li>
+      <li class="nested"><a href="#csl">CSL</a></li>
+      <li class="nested"><a href="#archive-org-s3">Archive.org S3</a></li>
+      <li class="nested"><a href="#player-and-browser-support">Player and Browser Support</a></li>
+    </ul>
+  </nav>
+
   <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Source Code</h2>
+    <h2 id="source-code" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Source Code</h2>
     <p style="color: #555; line-height: 1.7;">
       <a href="https://github.com/citelines/youtube-annotator" target="_blank" rel="noopener" style="color: #0497a6;">github.com/citelines/youtube-annotator</a>
     </p>
@@ -16,30 +29,107 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Stack</h2>
+    <h2 id="stack" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Stack</h2>
     <p style="color: #555; line-height: 1.7;"></p>
   </section>
 
   <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Claude Code</h2>
+    <h2 id="claude-code" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Claude Code</h2>
     <p style="color: #555; line-height: 1.7;"></p>
   </section>
 
   <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">In Progress</h2>
+    <h2 id="in-progress" style="font-size: 1.5rem; margin-bottom: 0.75rem;">In Progress</h2>
     <p style="color: #555; line-height: 1.7;"></p>
   </section>
 
   <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Future Work</h2>
+    <h2 id="future-work" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Future Work</h2>
 
-    <h3 style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">CSL</h3>
+    <h3 id="csl" style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">CSL</h3>
     <p style="color: #555; line-height: 1.7;"></p>
 
-    <h3 style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">Archive.org S3</h3>
+    <h3 id="archive-org-s3" style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">Archive.org S3</h3>
     <p style="color: #555; line-height: 1.7;"></p>
 
-    <h3 style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">Player and Browser Support</h3>
+    <h3 id="player-and-browser-support" style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">Player and Browser Support</h3>
     <p style="color: #555; line-height: 1.7;"></p>
   </section>
 </Layout>
+
+<style>
+  .toc {
+    position: fixed;
+    top: 120px;
+    left: max(1rem, calc((100vw - 860px) / 2 - 260px));
+    width: 220px;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 2px solid #eee;
+    padding-left: 0.75rem;
+  }
+
+  .toc li {
+    margin-bottom: 0.35rem;
+  }
+
+  .toc li.nested {
+    padding-left: 0.75rem;
+  }
+
+  .toc a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .toc a:hover {
+    color: #222;
+  }
+
+  .toc a.active {
+    color: #0497a6;
+    font-weight: 600;
+  }
+
+  @media (max-width: 1440px) {
+    .toc {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const tocLinks = document.querySelectorAll('.toc a');
+  if (tocLinks.length > 0) {
+    const ids = Array.from(tocLinks).map(a => a.getAttribute('href').slice(1));
+    const headings = ids
+      .map(id => document.getElementById(id))
+      .filter(el => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(a => a.classList.remove('active'));
+            const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+            if (active) active.classList.add('active');
+          }
+        }
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+    );
+
+    for (const h of headings) {
+      observer.observe(h);
+    }
+  }
+</script>

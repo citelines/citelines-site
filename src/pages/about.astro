@@ -5,6 +5,13 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="About" description="About Citelines — mission and team">
   <h1 style="margin-bottom: 2rem;">About</h1>
 
+  <nav class="toc" aria-label="Table of contents">
+    <ul>
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+  </nav>
+
   <p>
   Would you trust the information in a nonfiction book if there were no reference to where the information came from? Bibliographies, quotations, and endnotes create trust through transparency. Their standardization holds authors accountable. Citational practices activate readers to seek knowledge beyond the text in their hands—they create lines of sight in the complex web of human knowledge. As Naomi Klein argues,
   </p>
@@ -35,7 +42,7 @@ import Layout from '../layouts/Layout.astro';
   </p>
 
   <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Mission</h2>
+    <h2 id="mission" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Mission</h2>
     <p style="color: #555; line-height: 1.7;">Our mission is to develop this tool and build a non-profit organization. We will:
     <ul>
     <li><b>Build.</b> Oversee the research, development, and testing of the tool.</li>
@@ -46,7 +53,84 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Team</h2>
+    <h2 id="team" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Team</h2>
     <p style="color: #555; line-height: 1.7;">Placeholder team content. Coming soon.</p>
   </section>
 </Layout>
+
+<style>
+  .toc {
+    position: fixed;
+    top: 120px;
+    left: max(1rem, calc((100vw - 860px) / 2 - 260px));
+    width: 220px;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 2px solid #eee;
+    padding-left: 0.75rem;
+  }
+
+  .toc li {
+    margin-bottom: 0.35rem;
+  }
+
+  .toc li.nested {
+    padding-left: 0.75rem;
+  }
+
+  .toc a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .toc a:hover {
+    color: #222;
+  }
+
+  .toc a.active {
+    color: #0497a6;
+    font-weight: 600;
+  }
+
+  @media (max-width: 1440px) {
+    .toc {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const tocLinks = document.querySelectorAll('.toc a');
+  if (tocLinks.length > 0) {
+    const ids = Array.from(tocLinks).map(a => a.getAttribute('href').slice(1));
+    const headings = ids
+      .map(id => document.getElementById(id))
+      .filter(el => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(a => a.classList.remove('active'));
+            const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+            if (active) active.classList.add('active');
+          }
+        }
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+    );
+
+    for (const h of headings) {
+      observer.observe(h);
+    }
+  }
+</script>

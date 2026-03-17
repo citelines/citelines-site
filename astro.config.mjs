@@ -15,7 +15,7 @@ export default defineConfig({
     server: {
       proxy: {
         '/api': {
-          target: 'https://youtube-annotator-production.up.railway.app',
+          target: 'https://citelines-extension-production.up.railway.app',
           changeOrigin: true,
         }
       }

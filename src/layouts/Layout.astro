@@ -33,6 +33,12 @@ const { title, description = 'Citelines' } = Astro.props;
         align-items: center;
         gap: 2rem;
         height: 3.5rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        z-index: 1000;
       }
 
       nav .brand {
@@ -263,6 +269,33 @@ const { title, description = 'Citelines' } = Astro.props;
         max-width: 860px;
         margin: 0 auto;
         padding: 3rem 1.5rem;
+        padding-top: 6.5rem;
+      }
+
+    </style>
+    <style is:global>
+      main h2, main h3 {
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      main h2::before, main h3::before {
+        content: '▼';
+        font-size: 0.55em;
+        transition: transform 0.15s ease;
+        display: inline-block;
+        color: #999;
+      }
+
+      main h2.collapsed::before, main h3.collapsed::before {
+        transform: rotate(-90deg);
+      }
+
+      main [id] {
+        scroll-margin-top: 4.5rem;
       }
 
       footer {
@@ -364,7 +397,7 @@ const { title, description = 'Citelines' } = Astro.props;
     <script>
       const API = window.location.hostname === 'localhost'
         ? '/api'
-        : 'https://youtube-annotator-production.up.railway.app/api';
+        : 'https://citelines-extension-production.up.railway.app/api';
       const toggle = document.getElementById('account-toggle');
       const dropdown = document.getElementById('auth-dropdown');
       const tabs = dropdown.querySelectorAll('.auth-tab[data-tab]');
@@ -563,6 +596,25 @@ const { title, description = 'Citelines' } = Astro.props;
 
       // Init: check auth on load (for showing logged-in state if dropdown opens)
       checkAuth();
+    </script>
+    <script>
+      document.querySelectorAll('main h2, main h3').forEach(heading => {
+        const level = heading.tagName;
+        heading.addEventListener('click', () => {
+          heading.classList.toggle('collapsed');
+          const hide = heading.classList.contains('collapsed');
+          let el = heading.nextElementSibling;
+          while (el) {
+            if ((el.tagName === 'H2') || (level === 'H3' && el.tagName === 'H3')) break;
+            el.style.display = hide ? 'none' : '';
+            // When expanding a parent, also reset collapsed child headings
+            if (!hide && (el.tagName === 'H3') && el.classList.contains('collapsed')) {
+              el.classList.remove('collapsed');
+            }
+            el = el.nextElementSibling;
+          }
+        });
+      });
     </script>
   </body>
 </html>
