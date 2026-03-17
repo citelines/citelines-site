@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 # local development notes and decision docs (not for repo)
 dev-docs/
+ROADMAP.md
