@@ -187,21 +187,23 @@ import Layout from '../layouts/Layout.astro';
       .map(id => document.getElementById(id))
       .filter(el => el !== null);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            tocLinks.forEach(a => a.classList.remove('active'));
-            const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
-            if (active) active.classList.add('active');
-          }
+    function updateActiveToc() {
+      let current = headings[0];
+      for (const h of headings) {
+        if (h.getBoundingClientRect().top <= 100) {
+          current = h;
+        } else {
+          break;
         }
-      },
-      { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
-    );
-
-    for (const h of headings) {
-      observer.observe(h);
+      }
+      tocLinks.forEach(a => a.classList.remove('active'));
+      if (current) {
+        const active = document.querySelector(`.toc a[href="#${current.id}"]`);
+        if (active) active.classList.add('active');
+      }
     }
+
+    window.addEventListener('scroll', updateActiveToc, { passive: true });
+    updateActiveToc();
   }
 </script>

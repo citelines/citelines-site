@@ -41,6 +41,59 @@ const { title, description = 'Citelines' } = Astro.props;
         z-index: 1000;
       }
 
+      .nav-hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        color: #555;
+      }
+
+      .nav-hamburger:hover {
+        color: #1a1a1a;
+      }
+
+      .nav-links {
+        display: contents;
+      }
+
+      @media (max-width: 720px) {
+        nav {
+          gap: 0.75rem;
+          flex-wrap: wrap;
+          height: auto;
+          min-height: 3.5rem;
+        }
+
+        .nav-hamburger {
+          display: flex;
+          align-items: center;
+        }
+
+        .nav-links {
+          display: none;
+          width: 100%;
+          flex-direction: column;
+          gap: 0;
+          padding-bottom: 0.75rem;
+        }
+
+        .nav-links.open {
+          display: flex;
+        }
+
+        .nav-links a {
+          padding: 0.5rem 0;
+          border-top: 1px solid #f0f0f0;
+        }
+
+        nav .account-wrapper {
+          order: -1;
+          margin-left: auto;
+        }
+      }
+
       nav .brand {
         font-weight: 700;
         font-size: 1.125rem;
@@ -272,8 +325,22 @@ const { title, description = 'Citelines' } = Astro.props;
         padding-top: 6.5rem;
       }
 
+      @media (max-width: 720px) {
+        main {
+          padding: 5rem 1rem 2rem;
+        }
+
+        .auth-dropdown {
+          width: calc(100vw - 2rem);
+          right: -0.5rem;
+        }
+      }
     </style>
     <style is:global>
+      main img {
+        max-width: 100%;
+        height: auto;
+      }
       main h2, main h3 {
         cursor: pointer;
         user-select: none;
@@ -310,10 +377,19 @@ const { title, description = 'Citelines' } = Astro.props;
   <body>
     <nav>
       <a class="brand" href="/">Cite<span class="brand-line"></span>ines</a>
-      <a href="/about" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>About</a>
-      <a href="/get-involved" aria-current={Astro.url.pathname === '/get-involved' ? 'page' : undefined}>Get Involved</a>
-      <a href="/blog" aria-current={Astro.url.pathname === '/blog' ? 'page' : undefined}>Blog</a>
-      <a href="/documentation" aria-current={Astro.url.pathname === '/documentation' ? 'page' : undefined}>Documentation</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="/about" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>About</a>
+        <a href="/get-involved" aria-current={Astro.url.pathname === '/get-involved' ? 'page' : undefined}>Get Involved</a>
+        <a href="/blog" aria-current={Astro.url.pathname === '/blog' ? 'page' : undefined}>Blog</a>
+        <a href="/documentation" aria-current={Astro.url.pathname === '/documentation' ? 'page' : undefined}>Documentation</a>
+      </div>
       <div class="account-wrapper">
         <button class="account-btn" id="account-toggle" aria-label="Log in / Sign up">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -496,6 +572,16 @@ const { title, description = 'Citelines' } = Astro.props;
           // Network error — keep stale data, don't disrupt UX
         }
       }
+
+      // Mobile nav hamburger
+      const hamburger = document.getElementById('nav-hamburger');
+      const navLinks = document.getElementById('nav-links');
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => navLinks.classList.remove('open'));
+      });
 
       // Toggle dropdown
       toggle.addEventListener('click', (e) => {
