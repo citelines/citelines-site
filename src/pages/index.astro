@@ -4,111 +4,25 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Home" description="Citelines — verified citations for online video">
   <div class="hero">
-    <div class="player-demo-layout">
-      <div class="player" id="demo-player">
-        <!-- Video area -->
-        <div class="player-screen">
-          <div class="player-quote" id="player-quote"></div>
-        </div>
-
-        <!-- Progress bar area -->
-        <div class="player-progress-area">
-          <!-- Markers sit above the bar -->
-          <div class="player-markers" id="player-markers"></div>
-          <!-- Progress bar -->
-          <div class="player-progress-track">
-            <div class="player-progress-fill"></div>
-            <div class="player-progress-scrubber"></div>
-          </div>
-        </div>
-
-        <!-- Controls bar -->
-        <div class="player-controls">
-          <div class="player-controls-left">
-            <svg class="ctrl-play" width="16" height="18" viewBox="0 0 16 18"><polygon points="0,0 0,18 16,9" fill="#fff"/></svg>
-            <span class="ctrl-time">3:24 / 10:15</span>
-            <svg class="ctrl-vol" width="18" height="14" viewBox="0 0 18 14">
-              <rect x="0" y="4" width="3" height="6" rx="0.5" fill="#fff"/>
-              <polygon points="3,3 8,0 8,14 3,11" fill="#fff"/>
-              <path d="M10,3 Q13,7 10,11" stroke="#fff" stroke-width="1.2" fill="none"/>
-            </svg>
-          </div>
-          <div class="player-controls-right">
-            <svg class="ctrl-gear" width="16" height="16" viewBox="0 0 16 16">
-              <circle cx="8" cy="8" r="5.5" stroke="#fff" stroke-width="1.5" fill="none"/>
-              <circle cx="8" cy="8" r="2" fill="#fff"/>
-            </svg>
-            <svg class="ctrl-fs" width="16" height="14" viewBox="0 0 16 14">
-              <path d="M1,4 L1,1 L4,1" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <path d="M12,1 L15,1 L15,4" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <path d="M1,10 L1,13 L4,13" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <path d="M12,13 L15,13 L15,10" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Citelines FAB buttons -->
-        <div class="player-fabs">
-          <div class="player-fab">
-            <svg width="26" height="26" viewBox="0 0 36 36">
-              <circle cx="18" cy="18" r="18" fill="rgba(4,151,166,0.9)"/>
-              <circle cx="18" cy="13" r="4.5" fill="none" stroke="#000" stroke-width="1.5"/>
-              <path d="M9,27.5a9,9 0 0 1 18,0" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="player-fab">
-            <svg width="26" height="26" viewBox="0 0 36 36">
-              <circle cx="18" cy="18" r="18" fill="rgba(4,151,166,0.9)"/>
-              <line x1="11" y1="12" x2="25" y2="12" stroke="#000" stroke-width="2" stroke-linecap="round"/>
-              <line x1="11" y1="18" x2="25" y2="18" stroke="#000" stroke-width="2" stroke-linecap="round"/>
-              <line x1="11" y1="24" x2="25" y2="24" stroke="#000" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="player-fab">
-            <svg width="26" height="26" viewBox="0 0 36 36">
-              <circle cx="18" cy="18" r="18" fill="rgba(4,151,166,0.9)"/>
-              <line x1="18" y1="10" x2="18" y2="26" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="10" y1="18" x2="26" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Desktop elbow connector -->
-      <div class="demo-connector-desktop" id="demo-connector-desktop">
-        <div class="conn-seg" id="dconn-vert"></div>
-        <div class="conn-seg" id="dconn-horiz"></div>
-      </div>
-
-      <!-- Mobile elbow connector (hidden on desktop) -->
-      <div class="demo-connector-mobile" id="demo-connector-mobile">
-        <div class="conn-seg" id="conn-vert-top"></div>
-        <div class="conn-seg" id="conn-horiz"></div>
-        <div class="conn-seg" id="conn-vert-bottom"></div>
-      </div>
-
-      <!-- Popup card (beside the player) -->
-      <div class="demo-popup" id="demo-popup">
-        <div class="demo-popup-arrow" id="demo-popup-arrow"></div>
-        <div class="demo-popup-header">
-          <span class="demo-popup-timestamp" id="demo-popup-timestamp"></span>
-          <span class="demo-popup-close">×</span>
-        </div>
-        <div class="demo-popup-citation" id="demo-popup-citation"></div>
-      </div>
-    </div>
-
-    <p>A browser extension that creates a collaborative citation tool on videos. Add timestamped citations to a video. All users with the extension see citations from everyone.</p>
+    <p>A browser extension that creates a collaborative citation tool on videos.</p>
 
     <a href="/get-involved#get-the-plugin" class="btn-cta">Get the Plugin</a>
 
-    <div class="secondary">
-      <a href="#" class="btn-secondary">Buy us a coffee</a>
+    <img src="/images/heimlich_demo.png" alt="Screenshot of the Citelines browser extension on a YouTube video, showing citation markers and a citation popup" class="hero-screenshot" />
 
-      <form class="subscribe-form" onsubmit="event.preventDefault()">
-        <input type="email" placeholder="you@example.com" required />
-        <button type="submit" class="btn-secondary">Subscribe</button>
-      </form>
+    <div class="hero-quote-block">
+      <h3 class="hero-quote">&ldquo;Quoting is what we do to bring in the voices of others, to expand the frame, not to narrow it.&rdquo;</h3>
+      <div class="hero-citation">
+        <div class="hero-citation-marker" aria-hidden="true"></div>
+        <div class="hero-citation-card">
+          <div class="hero-citation-icon">📄</div>
+          <div class="hero-citation-info">
+            <span class="hero-citation-title">Doppelganger: A Trip into the Mirror World</span>
+            <span class="hero-citation-meta">Naomi Klein · 2023</span>
+            <span class="hero-citation-meta">Farrar, Straus, and Giroux · pp. 70</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -118,274 +32,79 @@ import Layout from '../layouts/Layout.astro';
       padding: 4rem 0;
     }
 
-    /* === Player demo layout === */
-    .player-demo-layout {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
+    .hero-quote-block {
+      max-width: 640px;
       margin: 0 auto 2rem;
-      position: relative;
     }
 
-    .player {
-      position: relative;
-      background: #0f0f0f;
-      border-radius: 8px;
-      overflow: hidden;
-      aspect-ratio: 16 / 9.5;
+    .hero-quote {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: #1a1a1a;
+      letter-spacing: -0.01em;
+      margin: 0 0 1.5rem;
+    }
+
+    .hero-citation {
       display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-width: 0;
+      align-items: flex-start;
+      justify-content: flex-end;
     }
 
-    .player-screen {
-      flex: 1;
-      background: #1a1a1a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 3.5rem 2rem 2rem;
-      position: relative;
-    }
-
-    .player-quote {
-      font-family: 'Roboto', Arial, sans-serif;
-      font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.35);
-      line-height: 1.5;
-      text-align: center;
-      transition: opacity 0.4s ease;
-      max-width: 420px;
-    }
-
-    .player-quote.fade-out {
-      opacity: 0;
-    }
-
-    /* === Progress area === */
-    .player-progress-area {
-      position: relative;
-      height: 16px;
-      background: #0f0f0f;
-      padding: 0 16px;
-    }
-
-    .player-markers {
-      position: absolute;
-      left: 16px;
-      right: 16px;
-      bottom: -8px;
-      height: 12px;
-    }
-
-    .player-marker {
-      position: absolute;
+    .hero-citation-marker {
       width: 0;
       height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-bottom: 10px solid #888;
-      transform: translateX(-50%);
-      cursor: pointer;
-      z-index: 10;
-      transition: transform 0.15s ease, filter 0.15s ease;
-      filter: drop-shadow(0 0 3px rgba(136, 136, 136, 0.6));
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 11px solid #0497a6;
+      filter: drop-shadow(0 0 4px rgba(4, 151, 166, 0.5));
+      flex-shrink: 0;
+      margin-top: 10px;
+      margin-right: 10px;
     }
 
-    .player-marker:hover {
-      transform: translateX(-50%) scale(1.3);
-    }
-
-    .player-marker.teal {
-      border-bottom-color: #0497a6;
-      filter: drop-shadow(0 0 3px rgba(4, 151, 166, 0.6));
-    }
-
-    .player-marker.active {
-      transform: translateX(-50%) scale(1.3);
-    }
-
-    .player-progress-track {
-      position: absolute;
-      bottom: 4px;
-      left: 16px;
-      right: 16px;
-      height: 3px;
-      background: #333;
-      border-radius: 1.5px;
-    }
-
-    .player-progress-fill {
-      width: 33.3%;
-      height: 100%;
-      background: #ff0000;
-      border-radius: 1.5px;
-    }
-
-    .player-progress-scrubber {
-      position: absolute;
-      top: 50%;
-      left: 33.3%;
-      width: 12px;
-      height: 12px;
-      background: #ff0000;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    /* === Controls bar === */
-    .player-controls {
+    .hero-citation-card {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 4px 16px 8px;
-      background: #0f0f0f;
-    }
-
-    .player-controls-left,
-    .player-controls-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .ctrl-time {
-      font-size: 11px;
-      color: #aaa;
-      font-family: 'Roboto', Arial, sans-serif;
-    }
-
-    /* === FAB buttons === */
-    .player-fabs {
-      position: absolute;
-      right: 8px;
-      bottom: 42px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .player-fabs svg {
-      display: block;
-    }
-
-    /* === Desktop connector === */
-    .demo-connector-desktop {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 15;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-    }
-
-    .demo-connector-desktop.visible {
-      opacity: 1;
-    }
-
-    .demo-connector-desktop.fade-out {
-      opacity: 0;
-    }
-
-    /* === Popup (side panel) === */
-    .demo-popup {
-      flex: 0 0 260px;
-      position: relative;
-      background: rgba(28, 28, 28, 0.95);
-      border: 1px solid #3a3a3a;
+      gap: 10px;
+      padding: 6px 16px;
+      background: #fafafa;
       border-radius: 8px;
-      padding: 12px;
-      font-family: 'Roboto', Arial, sans-serif;
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border-left: 3px solid #0497a6;
       text-align: left;
-      opacity: 0;
-      transition: opacity 0.35s ease;
     }
 
-    .demo-popup.visible {
-      opacity: 1;
-    }
-
-    .demo-popup.fade-out {
-      opacity: 0;
-    }
-
-    /* Arrow hidden by default; connector replaces it */
-    .demo-popup-arrow {
-      display: none;
-    }
-
-    .demo-popup-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #3a3a3a;
-    }
-
-    .demo-popup-timestamp {
-      font-size: 12px;
-      color: #aaa;
-      font-weight: 500;
-    }
-
-    .demo-popup-close {
-      color: #888;
-      font-size: 18px;
+    .hero-citation-icon {
+      font-size: 20px;
+      flex-shrink: 0;
       line-height: 1;
     }
 
-    .demo-popup-citation {
-      display: flex;
-      gap: 8px;
-      padding: 8px 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 6px;
-      border-left: 3px solid #0497a6;
-    }
-
-    .demo-popup-citation.other {
-      border-left-color: #444;
-    }
-
-    .demo-citation-icon {
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .demo-citation-info {
+    .hero-citation-info {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
 
-    .demo-citation-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: #fff;
+    .hero-citation-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1a1a1a;
     }
 
-    .demo-citation-meta {
-      font-size: 11px;
-      color: #999;
+    .hero-citation-meta {
+      font-size: 0.8rem;
+      color: #888;
     }
 
-    /* === Mobile connector (hidden on desktop) === */
-    .demo-connector-mobile {
-      display: none;
+    .hero-screenshot {
+      display: block;
+      max-width: 100%;
+      margin: 2.5rem auto 2.5rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
     }
 
-    .conn-seg {
-      position: absolute;
-    }
-
-    /* === CTA / Secondary === */
     .btn-cta {
       display: inline-block;
       margin-top: 2rem;
@@ -402,300 +121,14 @@ import Layout from '../layouts/Layout.astro';
       background: #333;
     }
 
-    .secondary {
-      margin-top: 2.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .btn-secondary {
-      display: inline-block;
-      padding: 0.55rem 1.25rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: #fff;
-      color: #555;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-    }
-
-    .btn-secondary:hover {
-      border-color: #999;
-      color: #1a1a1a;
-    }
-
-    .subscribe-form {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .subscribe-form input {
-      padding: 0.55rem 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      width: 200px;
-    }
-
-    .subscribe-form input:focus {
-      outline: none;
-      border-color: #999;
-    }
-
     @media (max-width: 720px) {
       .hero {
         padding: 2rem 0;
       }
 
-      .player-demo-layout {
-        flex-direction: column;
-        gap: 0;
-      }
-
-      .player {
-        flex: none;
-        width: 100%;
-      }
-
-      .demo-connector-mobile {
-        display: block;
-        position: relative;
-        width: 100%;
-        height: 28px;
-        opacity: 0;
-        transition: opacity 0.35s ease;
-      }
-
-      .demo-connector-mobile.visible {
-        opacity: 1;
-      }
-
-      .demo-connector-mobile.fade-out {
-        opacity: 0;
-      }
-
-      .demo-popup {
-        flex: none;
-        width: 100%;
-      }
-
-      .demo-popup-arrow {
-        display: none;
-      }
-
-      .demo-connector-desktop {
-        display: none;
-      }
-
-      .player-quote {
-        font-size: 0.85rem;
-        padding: 0 0.5rem;
-      }
-
-      .demo-citation-title {
-        font-size: 11px;
-      }
-
-      .demo-citation-meta {
-        font-size: 10px;
-      }
-
-      .player-fabs {
-        right: 6px;
-        bottom: 50px;
-      }
-
-      .player-fabs svg {
-        width: 28px;
-        height: 28px;
-      }
-
-      .secondary {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 0 1rem;
-      }
-
-      .subscribe-form {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .subscribe-form input {
-        width: auto;
-        flex: 1;
-        min-width: 0;
+      .hero-quote {
+        font-size: 1.35rem;
       }
     }
   </style>
-
-  <script>
-    // Each marker has a position, color, and associated quote
-    const markers = [
-      { pos: 12, teal: true, text: '\u201cPlaceholder Quotation A.\u201d', timestamp: '1:12', icon: '\ud83d\udcc4', title: 'Sample Citation A', meta: ['Author A \u00b7 2024', 'Publisher A'] },
-      { pos: 20, teal: false, text: '\u201cPlaceholder Quotation B.\u201d', timestamp: '2:05', icon: '\ud83d\udcc4', title: 'Sample Citation B', meta: ['Author B \u00b7 2022', 'Publisher B'] },
-      { pos: 35, teal: false, text: '\u201cPlaceholder Quotation C.\u201d', timestamp: '3:02', icon: '\ud83d\udcc4', title: 'Sample Citation C', meta: ['Author C \u00b7 2023', 'Publisher C'] },
-      { pos: 42, teal: true, text: '\u201cQuoting is what we do to bring in the voices of others, to expand the frame, not to narrow it.\u201d', timestamp: '3:24', icon: '\ud83d\udcc4', title: 'Doppelganger: A Trip into the Mirror World', meta: ['Naomi Klein \u00b7 2023', 'Farrar, Straus, and Giroux \u00b7 pp. 70'] },
-      { pos: 62, teal: true, text: '\u201cPlaceholder Quotation D.\u201d', timestamp: '4:30', icon: '\ud83d\udcc4', title: 'Sample Citation D', meta: ['Author D \u00b7 2021', 'Publisher D'] },
-      { pos: 78, teal: false, text: '\u201cPlaceholder Quotation E.\u201d', timestamp: '6:48', icon: '\ud83d\udcc4', title: 'Sample Citation E', meta: ['Author E \u00b7 2020', 'Publisher E'] },
-    ];
-
-    // Only markers with quotes are interactive
-    const interactiveIndices = markers.map((m, i) => m.text ? i : null).filter(i => i !== null);
-
-    const markersEl = document.getElementById('player-markers');
-    const quoteEl = document.getElementById('player-quote');
-    const popupEl = document.getElementById('demo-popup');
-    const popupTimestamp = document.getElementById('demo-popup-timestamp');
-    const popupCitation = document.getElementById('demo-popup-citation');
-    const connMobile = document.getElementById('demo-connector-mobile');
-    const connVT = document.getElementById('conn-vert-top');
-    const connH = document.getElementById('conn-horiz');
-    const connVB = document.getElementById('conn-vert-bottom');
-    const connDesktop = document.getElementById('demo-connector-desktop');
-    const dconnVert = document.getElementById('dconn-vert');
-    const dconnHoriz = document.getElementById('dconn-horiz');
-    const layoutEl = document.querySelector('.player-demo-layout');
-
-    // Build marker elements
-    const markerEls = [];
-    markers.forEach((m, i) => {
-      const el = document.createElement('div');
-      el.className = 'player-marker' + (m.teal ? ' teal' : '');
-      el.style.left = m.pos + '%';
-      if (m.text) {
-        el.addEventListener('click', () => jumpTo(interactiveIndices.indexOf(i)));
-      }
-      markersEl.appendChild(el);
-      markerEls.push(el);
-    });
-
-    let currentCycle = 0; // index into interactiveIndices
-    let timer = null;
-
-    function positionDesktopConnector(markerIdx, isTeal) {
-      if (window.innerWidth <= 720) return;
-      var markerEl = markerEls[markerIdx];
-      var layoutRect = layoutEl.getBoundingClientRect();
-      var markerRect = markerEl.getBoundingClientRect();
-      var popupRect = popupEl.getBoundingClientRect();
-
-      var color = isTeal ? '#0497a6' : '#888';
-
-      // Marker center relative to layout
-      var mX = markerRect.left + markerRect.width / 2 - layoutRect.left;
-      var mY = markerRect.top - layoutRect.top;
-
-      // Popup left edge, vertical center relative to layout
-      var pLeft = popupRect.left - layoutRect.left;
-      var pCenterY = popupRect.top + popupRect.height / 2 - layoutRect.top;
-
-      // Vertical: from popup center Y up to marker top
-      var vertTop = Math.min(mY, pCenterY);
-      var vertH = Math.abs(mY - pCenterY);
-      dconnVert.style.cssText = 'position:absolute;left:' + mX + 'px;top:' + vertTop + 'px;width:2px;height:' + vertH + 'px;background:' + color;
-
-      // Horizontal: from marker X right to popup left edge
-      var horizY = pCenterY;
-      var horizW = pLeft - mX;
-      dconnHoriz.style.cssText = 'position:absolute;left:' + mX + 'px;top:' + horizY + 'px;width:' + Math.max(horizW, 2) + 'px;height:2px;background:' + color;
-    }
-
-    function positionMobileConnector(markerIdx, isTeal) {
-      if (window.innerWidth > 720) return;
-      var markerEl = markerEls[markerIdx];
-      var connRect = connMobile.getBoundingClientRect();
-      var markerRect = markerEl.getBoundingClientRect();
-      var markerX = markerRect.left + markerRect.width / 2 - connRect.left;
-      var centerX = connRect.width / 2;
-      var color = isTeal ? '#0497a6' : '#888';
-      var elbowY = 14;
-      var totalH = 28;
-
-      connVT.style.cssText = 'position:absolute;top:0;left:' + markerX + 'px;transform:translateX(-50%);width:2px;height:' + elbowY + 'px;background:' + color;
-      var hLeft = Math.min(markerX, centerX);
-      var hWidth = Math.abs(markerX - centerX);
-      connH.style.cssText = 'position:absolute;top:' + elbowY + 'px;left:' + hLeft + 'px;width:' + Math.max(hWidth, 2) + 'px;height:2px;background:' + color;
-      connVB.style.cssText = 'position:absolute;top:' + elbowY + 'px;left:' + centerX + 'px;transform:translateX(-50%);width:2px;height:' + (totalH - elbowY) + 'px;background:' + color;
-    }
-
-    function showByMarker(markerIdx) {
-      var m = markers[markerIdx];
-
-      // Quote text
-      quoteEl.classList.remove('fade-out');
-      quoteEl.textContent = m.text;
-
-      // Highlight marker
-      markerEls.forEach(function(el) { el.classList.remove('active'); });
-      markerEls[markerIdx].classList.add('active');
-
-      // Popup content
-      popupTimestamp.textContent = m.timestamp;
-      popupCitation.className = 'demo-popup-citation' + (m.teal ? '' : ' other');
-      popupCitation.innerHTML =
-        '<span class="demo-citation-icon">' + m.icon + '</span>' +
-        '<span class="demo-citation-info">' +
-          '<span class="demo-citation-title">' + m.title + '</span>' +
-          m.meta.map(function(x) { return '<span class="demo-citation-meta">' + x + '</span>'; }).join('') +
-        '</span>';
-
-      // Fade in
-      popupEl.classList.remove('visible', 'fade-out');
-      connMobile.classList.remove('visible', 'fade-out');
-      connDesktop.classList.remove('visible', 'fade-out');
-      setTimeout(function() {
-        popupEl.classList.add('visible');
-        connMobile.classList.add('visible');
-        connDesktop.classList.add('visible');
-        requestAnimationFrame(function() {
-          positionMobileConnector(markerIdx, m.teal);
-          positionDesktopConnector(markerIdx, m.teal);
-        });
-      }, 800);
-    }
-
-    function cycleToNext() {
-      quoteEl.classList.add('fade-out');
-      popupEl.classList.add('fade-out');
-      connMobile.classList.add('fade-out');
-      connDesktop.classList.add('fade-out');
-
-      setTimeout(function() {
-        popupEl.classList.remove('visible', 'fade-out');
-        connMobile.classList.remove('visible', 'fade-out');
-        connDesktop.classList.remove('visible', 'fade-out');
-        markerEls.forEach(function(el) { el.classList.remove('active'); });
-        currentCycle = (currentCycle + 1) % interactiveIndices.length;
-        showByMarker(interactiveIndices[currentCycle]);
-      }, 400);
-    }
-
-    function jumpTo(cycleIndex) {
-      if (cycleIndex === currentCycle) return;
-      clearInterval(timer);
-
-      quoteEl.classList.add('fade-out');
-      popupEl.classList.add('fade-out');
-      connMobile.classList.add('fade-out');
-      connDesktop.classList.add('fade-out');
-
-      setTimeout(function() {
-        popupEl.classList.remove('visible', 'fade-out');
-        connMobile.classList.remove('visible', 'fade-out');
-        connDesktop.classList.remove('visible', 'fade-out');
-        markerEls.forEach(function(el) { el.classList.remove('active'); });
-        currentCycle = cycleIndex;
-        showByMarker(interactiveIndices[currentCycle]);
-        timer = setInterval(cycleToNext, 6000);
-      }, 400);
-    }
-
-    showByMarker(interactiveIndices[0]);
-    timer = setInterval(cycleToNext, 6000);
-  </script>
 </Layout>

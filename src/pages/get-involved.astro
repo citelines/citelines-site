@@ -55,40 +55,9 @@ import Layout from '../layouts/Layout.astro';
           <li>If this is your first time using Citelines, or if you have not created an account, those icons will be <strong>grey</strong>. You do not need an account to use Citelines.</li>
           <li>To <strong>create or log into an account</strong>, click the button with the silhouette on it. If you are logged in to your Citelines account, these buttons will be <strong>teal</strong>. If you have connected your YouTube account, and are viewing a video that you created, they will be <strong>orange</strong>.</li>
           <li>To <strong>add a citation</strong>, move the the video player's playhead to the desired timestamp. Then click the "+" button.
-          <li>To <strong>view citations</strong>, click on the triangular markers that appear on the progress bar. If no citations exist on the video yet, there will be no markers. The markers' color corresponds to user ownership described above.</li>
+          <li>To <strong>view citations</strong>, click on the markers that appear in the timeline region below the video's progress bar. If no citations exist on the video yet, there will be no markers. The markers' color corresponds to user ownership described above.</li>
           <li>To view the <strong>bibliography</strong> of the video, click the button with three lines on it. It presents all citations on the video in chronological order.</li>
         </ul>
-        <br />
-        <div style="display: flex; align-items: flex-end; gap: 1.5rem; margin-top: 0.75rem; flex-wrap: wrap;">
-          <img src="/images/initiated-citelines-ux.png" alt="View of the Citelines plugin on a blank YouTube video." style="max-width: 500px; border: 1px solid #ddd; border-radius: 4px;" />
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
-              <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="18" cy="18" r="18" fill="rgba(4, 151, 166, 0.9)" />
-                <circle cx="18" cy="13" r="4.5" fill="none" stroke="#000" stroke-width="1.5" />
-                <path d="M9 27.5a9 9 0 0 1 18 0" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" />
-              </svg>
-              <span style="font-size: 0.7rem; color: #888;">Account</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
-              <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="18" cy="18" r="18" fill="rgba(4, 151, 166, 0.9)" />
-                <line x1="11" y1="12" x2="25" y2="12" stroke="#000" stroke-width="2" stroke-linecap="round" />
-                <line x1="11" y1="18" x2="25" y2="18" stroke="#000" stroke-width="2" stroke-linecap="round" />
-                <line x1="11" y1="24" x2="25" y2="24" stroke="#000" stroke-width="2" stroke-linecap="round" />
-              </svg>
-              <span style="font-size: 0.7rem; color: #888;">Bibliography</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
-              <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="18" cy="18" r="18" fill="rgba(4, 151, 166, 0.9)" />
-                <line x1="18" y1="10" x2="18" y2="26" stroke="#000" stroke-width="2.5" stroke-linecap="round" />
-                <line x1="10" y1="18" x2="26" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round" />
-              </svg>
-              <span style="font-size: 0.7rem; color: #888;">Add Citation</span>
-            </div>
-          </div>
-        </div>
       </li>
     </ol>
 <h3 id="video-creators" style="font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #1a1a1a;">Video Creators</h3>
@@ -105,7 +74,7 @@ import Layout from '../layouts/Layout.astro';
         <strong>Go to YouTube</strong><br />
         <ul>
           <li>Perform your normal upload and/or edit steps for a YouTube video you've created. On the "Video Details" page, you should see the Citelines creator tools panel on the right side of the screen, where you can add citations to your video.</li>
-          <li>Upon clicking the <strong>Add Citation</strong> button, you can navigate to your YouTube video and you will see your citations, in orange, as triangular markers on the progress bar.</li>
+          <li>Upon clicking the <strong>Add Citation</strong> button, you can navigate to your YouTube video and you will see your citations, in orange, as markers appearing in the timeline region below the video's progress bar.</li>
           <li>Adding citations from the Studio / Video Details page is more efficient for a video creator. However, you can also add citations simply from viewing the video, like any other Citelines viewer.</li>
         </ul>
         <br /><img src="/images/creator-tools-sidebar.png" alt="Citelines creator tools righthand sidebar as seen in YouTube Studio, Video Details page" style="max-width: 250px; margin-top: 0.75rem; border: 1px solid #ddd; border-radius: 4px;" />

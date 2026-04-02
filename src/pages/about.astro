@@ -61,7 +61,21 @@ import Layout from '../layouts/Layout.astro';
 
   <section style="margin-bottom: 3rem;">
     <h2 id="team" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Team</h2>
-    <p style="color: #555; line-height: 1.7;">Placeholder team content. Coming soon.</p>
+    <div style="display: flex; gap: 1.25rem; align-items: flex-start; margin-bottom: 2rem;">
+      <div style="width: 100px; height: 100px; border-radius: 50%; background: #e0e0e0; flex-shrink: 0;"></div>
+      <div>
+        <p style="font-size: 1.15rem; font-weight: 600; color: #1a1a1a; margin-bottom: 0.25rem;">Sowj Kudva</p>
+        <p style="color: #555; line-height: 1.7;">Bio placeholder.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 1.25rem; align-items: flex-start; margin-bottom: 2rem;">
+      <img src="/images/abe-katz.jpg" alt="Abe Katz" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; flex-shrink: 0;" />
+      <div>
+        <p style="font-size: 1.15rem; font-weight: 600; color: #1a1a1a; margin-bottom: 0.25rem;"><a href="https://www.abekatz.com" target="_blank" style="color: #0497a6; text-decoration: none;">Abe Katz</a></p>
+        <p style="color: #555; line-height: 1.7;">Abe Katz studies mass communication on the internet. As a tech policy practitioner, he has worked at Meta, mitigating misinformation and building public accountability for social tech; at Discord, where he developed new standards for safety in social tech product development; and at Stripe, where he works on risk standards. He also teaches tech policy topics at the undergraduate and graduate levels. He's fascinated with how big social phenomena like attention, trust, and consensus occur through social graphs on the internet.</p>
+      </div>
+    </div>
   </section>
 </Layout>
 
