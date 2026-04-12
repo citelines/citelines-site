@@ -24,6 +24,22 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
     </div>
+
+    <section class="newsletter">
+      <p class="newsletter-intro">Sign up for the newsletter.</p>
+      <form id="newsletter-form" class="newsletter-form">
+        <input
+          type="email"
+          id="newsletter-email"
+          name="email"
+          placeholder="you@example.com"
+          required
+          autocomplete="email"
+        />
+        <button type="submit" class="newsletter-submit">Subscribe</button>
+      </form>
+      <p id="newsletter-status" class="newsletter-status" aria-live="polite"></p>
+    </section>
   </div>
 
   <style is:global>
@@ -121,6 +137,72 @@ import Layout from '../layouts/Layout.astro';
       background: #333;
     }
 
+    .newsletter {
+      max-width: 440px;
+      margin: 3rem auto 0;
+    }
+
+    .newsletter-intro {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 0.75rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .newsletter-form input[type="email"] {
+      flex: 1;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .newsletter-form input[type="email"]:focus {
+      border-color: #0497a6;
+    }
+
+    .newsletter-submit {
+      padding: 0.6rem 1.2rem;
+      background: #0497a6;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .newsletter-submit:hover {
+      background: #05b3c4;
+    }
+
+    .newsletter-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .newsletter-status {
+      font-size: 0.85rem;
+      color: #555;
+      margin-top: 0.6rem;
+      min-height: 1em;
+    }
+
+    .newsletter-status.error {
+      color: #c00;
+    }
+
+    .newsletter-status.success {
+      color: #0497a6;
+    }
+
     @media (max-width: 720px) {
       .hero {
         padding: 2rem 0;
@@ -129,6 +211,54 @@ import Layout from '../layouts/Layout.astro';
       .hero-quote {
         font-size: 1.35rem;
       }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
     }
   </style>
+
+  <script>
+    const API = window.location.hostname === 'localhost'
+      ? '/api'
+      : 'https://citelines-extension-production.up.railway.app/api';
+
+    const form = document.getElementById('newsletter-form') as HTMLFormElement;
+    const emailInput = document.getElementById('newsletter-email') as HTMLInputElement;
+    const submitBtn = form.querySelector('.newsletter-submit') as HTMLButtonElement;
+    const status = document.getElementById('newsletter-status') as HTMLElement;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      status.className = 'newsletter-status';
+
+      const email = emailInput.value.trim();
+      if (!email) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Subscribing…';
+
+      try {
+        const res = await fetch(`${API}/newsletter/subscribe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || 'Something went wrong');
+        }
+        status.textContent = 'Thanks — you\'re subscribed.';
+        status.classList.add('success');
+        form.reset();
+      } catch (err) {
+        status.textContent = (err as Error).message;
+        status.classList.add('error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Subscribe';
+      }
+    });
+  </script>
 </Layout>
