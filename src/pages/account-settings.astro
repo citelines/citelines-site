@@ -25,6 +25,14 @@ import Layout from '../layouts/Layout.astro';
         <div class="settings-value" id="settings-auth-type">—</div>
       </div>
 
+      <!-- Newsletter -->
+      <div id="newsletter-section" class="newsletter-section" style="display:none">
+        <h2>Newsletter</h2>
+        <p class="newsletter-desc" id="newsletter-desc">Checking your subscription status…</p>
+        <p id="newsletter-msg" class="newsletter-msg" aria-live="polite"></p>
+        <button id="newsletter-btn" class="newsletter-btn" style="display:none"></button>
+      </div>
+
       <!-- Danger Zone -->
       <div class="danger-zone">
         <h2>Delete Account</h2>
@@ -111,6 +119,55 @@ import Layout from '../layouts/Layout.astro';
     font-size: 0.95rem;
     color: #1a1a1a;
   }
+
+  .newsletter-section {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    margin-bottom: 2rem;
+  }
+
+  .newsletter-section h2 {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    margin-bottom: 0.75rem;
+  }
+
+  .newsletter-desc {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .newsletter-msg {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 0.75rem;
+    min-height: 1em;
+  }
+
+  .newsletter-msg.error { color: #c00; }
+  .newsletter-msg.success { color: #0497a6; }
+
+  .newsletter-btn {
+    padding: 0.5rem 1rem;
+    background: #0497a6;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .newsletter-btn:hover:not(:disabled) { background: #05b3c4; }
+  .newsletter-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .newsletter-btn.secondary { background: #666; }
+  .newsletter-btn.secondary:hover:not(:disabled) { background: #555; }
 
   .danger-zone {
     border: 1px solid #e5c5c5;
@@ -210,6 +267,10 @@ import Layout from '../layouts/Layout.astro';
   const confirmSection = document.getElementById('delete-confirm-section');
   const passwordInput = document.getElementById('delete-password');
   const confirmInput = document.getElementById('delete-confirm-input');
+  const newsletterSection = document.getElementById('newsletter-section');
+  const newsletterDesc = document.getElementById('newsletter-desc');
+  const newsletterMsg = document.getElementById('newsletter-msg');
+  const newsletterBtn = document.getElementById('newsletter-btn');
 
   let currentUser = null;
   let isYouTubeOnly = false;
@@ -304,6 +365,86 @@ import Layout from '../layouts/Layout.astro';
     }
   });
 
+  function setNewsletterMsg(text, kind) {
+    newsletterMsg.textContent = text || '';
+    newsletterMsg.className = 'newsletter-msg' + (kind ? ' ' + kind : '');
+  }
+
+  function renderNewsletterState(status, email) {
+    if (status === 'subscribed') {
+      newsletterDesc.textContent = `You're subscribed to the Citelines newsletter as ${email}.`;
+      newsletterBtn.textContent = 'Unsubscribe';
+      newsletterBtn.className = 'newsletter-btn secondary';
+      newsletterBtn.dataset.action = 'unsubscribe';
+      newsletterBtn.style.display = '';
+    } else if (status === 'unsubscribed') {
+      newsletterDesc.textContent = `You're unsubscribed. Resubscribe ${email} to the newsletter anytime.`;
+      newsletterBtn.textContent = 'Resubscribe';
+      newsletterBtn.className = 'newsletter-btn';
+      newsletterBtn.dataset.action = 'subscribe';
+      newsletterBtn.style.display = '';
+    } else {
+      newsletterDesc.textContent = `You're not subscribed to the Citelines newsletter.`;
+      newsletterBtn.textContent = 'Subscribe';
+      newsletterBtn.className = 'newsletter-btn';
+      newsletterBtn.dataset.action = 'subscribe';
+      newsletterBtn.style.display = '';
+    }
+  }
+
+  async function loadNewsletterStatus() {
+    try {
+      const token = getToken();
+      const res = await fetch(`${API}/newsletter/me/status`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to load status');
+      renderNewsletterState(data.status, data.email);
+    } catch (err) {
+      newsletterDesc.textContent = '';
+      setNewsletterMsg(err.message, 'error');
+    }
+  }
+
+  newsletterBtn.addEventListener('click', async () => {
+    const action = newsletterBtn.dataset.action;
+    const email = currentUser?.email;
+    if (!email) return;
+    setNewsletterMsg('');
+    newsletterBtn.disabled = true;
+    const originalText = newsletterBtn.textContent;
+    newsletterBtn.textContent = action === 'subscribe' ? 'Subscribing…' : 'Unsubscribing…';
+
+    try {
+      if (action === 'subscribe') {
+        const res = await fetch(`${API}/newsletter/subscribe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'Subscription failed');
+        setNewsletterMsg(data.resubscribed ? 'Welcome back — you\u2019ve been resubscribed.' : 'Thanks — you\u2019re subscribed.', 'success');
+      } else {
+        const token = getToken();
+        const res = await fetch(`${API}/newsletter/me/unsubscribe`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'Unsubscribe failed');
+        setNewsletterMsg('You\u2019ve been unsubscribed.', 'success');
+      }
+      await loadNewsletterStatus();
+    } catch (err) {
+      setNewsletterMsg(err.message, 'error');
+      newsletterBtn.textContent = originalText;
+    } finally {
+      newsletterBtn.disabled = false;
+    }
+  });
+
   // Init
   function init() {
     const token = getToken();
@@ -330,6 +471,9 @@ import Layout from '../layouts/Layout.astro';
     if (isYouTubeOnly) {
       hide(passwordSection);
       show(confirmSection);
+    } else {
+      show(newsletterSection);
+      loadNewsletterStatus();
     }
 
     show(elAuthed);
