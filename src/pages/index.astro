@@ -245,11 +245,13 @@ import Layout from '../layouts/Layout.astro';
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email }),
         });
+        const data = await res.json().catch(() => ({}));
         if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
           throw new Error(data.error || 'Something went wrong');
         }
-        status.textContent = 'Thanks — you\'re subscribed.';
+        status.textContent = data.alreadySubscribed
+          ? 'You\'re already subscribed.'
+          : 'Thanks — you\'re subscribed.';
         status.classList.add('success');
         form.reset();
       } catch (err) {

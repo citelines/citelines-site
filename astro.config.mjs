@@ -16,6 +16,7 @@ export default defineConfig({
       proxy: {
         '/api': {
           target: 'https://citelines-extension-production.up.railway.app',
+          //target: 'http://localhost:3000',
           changeOrigin: true,
         }
       }

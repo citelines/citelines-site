@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Unsubscribe" description="Unsubscribe from the Citelines newsletter">
+  <div class="unsub">
+    <h1 id="unsub-heading">Unsubscribing…</h1>
+    <p id="unsub-status" class="unsub-status" aria-live="polite"></p>
+    <p id="unsub-email" class="email-display"></p>
+  </div>
+
+  <style>
+    .unsub {
+      max-width: 480px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+
+    .unsub h1 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+    }
+
+    .unsub p {
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .email-display {
+      font-family: monospace;
+      color: #1a1a1a;
+      background: #f5f5f5;
+      padding: 0.5rem 0.8rem;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .unsub-status {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .unsub-status.success {
+      color: #0497a6;
+    }
+
+    .unsub-status.error {
+      color: #c00;
+    }
+  </style>
+
+  <script>
+    const API = window.location.hostname === 'localhost'
+      ? '/api'
+      : 'https://citelines-extension-production.up.railway.app/api';
+
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email') || '';
+    const token = params.get('token') || '';
+
+    const heading = document.getElementById('unsub-heading') as HTMLElement;
+    const emailDisplay = document.getElementById('unsub-email') as HTMLElement;
+    const status = document.getElementById('unsub-status') as HTMLElement;
+
+    async function unsubscribe() {
+      if (!email || !token) {
+        heading.textContent = 'Invalid link';
+        status.textContent = 'This unsubscribe link is invalid or incomplete.';
+        status.classList.add('error');
+        return;
+      }
+
+      emailDisplay.textContent = email;
+
+      try {
+        const res = await fetch(`${API}/newsletter/unsubscribe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, token }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'Something went wrong');
+        heading.textContent = 'Unsubscribe successful';
+        status.textContent = 'You will no longer receive the Citelines newsletter.';
+        status.classList.add('success');
+      } catch (err) {
+        heading.textContent = 'Unsubscribe failed';
+        status.textContent = (err as Error).message;
+        status.classList.add('error');
+      }
+    }
+
+    unsubscribe();
+  </script>
+</Layout>
