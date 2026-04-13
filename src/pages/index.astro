@@ -249,9 +249,13 @@ import Layout from '../layouts/Layout.astro';
         if (!res.ok) {
           throw new Error(data.error || 'Something went wrong');
         }
-        status.textContent = data.alreadySubscribed
-          ? 'You\'re already subscribed.'
-          : 'Thanks — you\'re subscribed.';
+        if (data.alreadySubscribed) {
+          status.textContent = 'You\'re already subscribed.';
+        } else if (data.resubscribed) {
+          status.textContent = 'Welcome back — you\'ve been resubscribed.';
+        } else {
+          status.textContent = 'Thanks — you\'re subscribed.';
+        }
         status.classList.add('success');
         form.reset();
       } catch (err) {
